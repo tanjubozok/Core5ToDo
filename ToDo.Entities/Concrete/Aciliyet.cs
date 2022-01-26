@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 using ToDo.Entities.Interfaces;
 
 namespace ToDo.Entities.Concrete
@@ -8,6 +8,6 @@ namespace ToDo.Entities.Concrete
         public int Id { get; set; }
         public string Tanim { get; set; }
 
-        public DbSet<Gorev> Gorevler { get; set; }
+        public List<Gorev> Gorevler { get; set; }
     }
 }

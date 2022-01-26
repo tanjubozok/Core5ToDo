@@ -8,6 +8,7 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Mapping
     {
         public void Configure(EntityTypeBuilder<Aciliyet> builder)
         {
+            builder.Property(I => I.Tanim).HasMaxLength(100);
         }
     }
 }

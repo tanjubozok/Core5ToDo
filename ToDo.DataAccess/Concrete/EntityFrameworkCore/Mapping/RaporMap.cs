@@ -8,15 +8,15 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Mapping
     {
         public void Configure(EntityTypeBuilder<Rapor> builder)
         {
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).UseIdentityColumn();
-            builder.Property(x => x.Tanim).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.Detay).HasColumnType("ntext");
+            builder.HasKey(I => I.Id);
+            builder.Property(I => I.Id).UseIdentityColumn();
+            builder.Property(I => I.Tanim).HasMaxLength(100).IsRequired();
+            builder.Property(I => I.Detay).HasColumnType("ntext");
 
             builder
-                .HasOne(x => x.Gorev)
-                .WithMany(x => x.Raporlar)
-                .HasForeignKey(x => x.GorevId);
+                .HasOne(I => I.Gorev)
+                .WithMany(I => I.Raporlar)
+                .HasForeignKey(I => I.GorevId);
         }
     }
 }

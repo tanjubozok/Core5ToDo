@@ -8,16 +8,16 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Mapping
     {
         public void Configure(EntityTypeBuilder<Gorev> builder)
         {
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).UseIdentityColumn();
+            builder.HasKey(I => I.Id);
+            builder.Property(I => I.Id).UseIdentityColumn();
 
-            builder.Property(x => x.Ad).HasMaxLength(200).IsRequired();
-            builder.Property(x => x.Aciklama).HasColumnType("ntext");
+            builder.Property(I => I.Ad).HasMaxLength(200);
+            builder.Property(I => I.Aciklama).HasColumnType("ntext");
 
             builder
-                .HasOne(x => x.Aciliyet)
-                .WithMany(x => x.Gorevler)
-                .HasForeignKey(x => x.AciliyetId);
+                .HasOne(I => I.Aciliyet)
+                .WithMany(I => I.Gorevler)
+                .HasForeignKey(I => I.AciliyetId);
         }
     }
 }
