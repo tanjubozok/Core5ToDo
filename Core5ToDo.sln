@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Business", "ToDo.Business\ToDo.Business.csproj", "{0A21136D-D22D-4C2D-BC08-768557BEC8E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Business", "ToDo.Business\ToDo.Business.csproj", "{0A21136D-D22D-4C2D-BC08-768557BEC8E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.DataAccess", "ToDo.DataAccess\ToDo.DataAccess.csproj", "{3FC319CC-2B7B-4788-A8AD-3C30BB579EEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.DataAccess", "ToDo.DataAccess\ToDo.DataAccess.csproj", "{3FC319CC-2B7B-4788-A8AD-3C30BB579EEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Entities", "ToDo.Entities\ToDo.Entities.csproj", "{44EDD89B-9B2E-408C-9609-602829E8EEC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Entities", "ToDo.Entities\ToDo.Entities.csproj", "{44EDD89B-9B2E-408C-9609-602829E8EEC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Web", "ToDo.Web\ToDo.Web.csproj", "{0B775DF1-EF57-4453-A1DC-58114D7030DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.WebUI", "ToDo.WebUI\ToDo.WebUI.csproj", "{35DBA2CD-BD35-47C6-A302-0DE48429FC33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{44EDD89B-9B2E-408C-9609-602829E8EEC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44EDD89B-9B2E-408C-9609-602829E8EEC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44EDD89B-9B2E-408C-9609-602829E8EEC2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B775DF1-EF57-4453-A1DC-58114D7030DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B775DF1-EF57-4453-A1DC-58114D7030DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B775DF1-EF57-4453-A1DC-58114D7030DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B775DF1-EF57-4453-A1DC-58114D7030DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35DBA2CD-BD35-47C6-A302-0DE48429FC33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35DBA2CD-BD35-47C6-A302-0DE48429FC33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35DBA2CD-BD35-47C6-A302-0DE48429FC33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35DBA2CD-BD35-47C6-A302-0DE48429FC33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

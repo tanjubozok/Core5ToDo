@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace ToDo.Web
+namespace ToDo.WebUI
 {
     public class Program
     {

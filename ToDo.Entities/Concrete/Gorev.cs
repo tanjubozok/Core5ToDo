@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using ToDo.Entities.Interfaces;
 
 namespace ToDo.Entities.Concrete
 {
-    public class Calisma : ITable
+    public class Gorev : ITable
     {
         public int Id { get; set; }
         public string Ad { get; set; }
@@ -11,7 +12,12 @@ namespace ToDo.Entities.Concrete
         public bool Durum { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
 
-        public int KullaniciId { get; set; }
-        public Kullanici Kullanici { get; set; }
+        public int AciliyetId { get; set; }
+        public Aciliyet Aciliyet { get; set; }
+
+        public int? AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
+
+        public List<Rapor> Raporlar { get; set; }
     }
 }

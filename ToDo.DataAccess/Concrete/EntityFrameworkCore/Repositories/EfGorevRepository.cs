@@ -3,7 +3,7 @@ using ToDo.Entities.Concrete;
 
 namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
 {
-    public class EfCalismaRepository : EfGenericRepository<Calisma>, ICalismaDal
+    public class EfGorevRepository : EfGenericRepository<Gorev>, IGorevDal
     {
 
     }

@@ -2,7 +2,7 @@
 
 namespace ToDo.DataAccess.Interfaces
 {
-    public interface IKullaniciDal : IGenericDal<Kullanici>
+    public interface IGorevDal : IGenericDal<Gorev>
     {
 
     }

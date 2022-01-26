@@ -5,36 +5,36 @@ using ToDo.Entities.Concrete;
 
 namespace ToDo.Business.Concrete
 {
-    public class CalismaManager : ICalismaService
+    public class GorevManager : IGorevService
     {
-        private readonly EfCalismaRepository _efCalismaRepository;
+        private readonly EfGorevRepository _efCalismaRepository;
 
-        public CalismaManager()
+        public GorevManager()
         {
-            _efCalismaRepository = new EfCalismaRepository();
+            _efCalismaRepository = new EfGorevRepository();
         }
 
-        public List<Calisma> GetirHepsi()
+        public List<Gorev> GetirHepsi()
         {
             return _efCalismaRepository.GetirHepsi();
         }
 
-        public Calisma GetirId(int id)
+        public Gorev GetirId(int id)
         {
             return _efCalismaRepository.GetirId(id);
         }
 
-        public void Guncelle(Calisma model)
+        public void Guncelle(Gorev model)
         {
             _efCalismaRepository.Guncelle(model);
         }
 
-        public void Kaydet(Calisma model)
+        public void Kaydet(Gorev model)
         {
             _efCalismaRepository.Kaydet(model);
         }
 
-        public void Sil(Calisma model)
+        public void Sil(Gorev model)
         {
             _efCalismaRepository.Sil(model);
         }
