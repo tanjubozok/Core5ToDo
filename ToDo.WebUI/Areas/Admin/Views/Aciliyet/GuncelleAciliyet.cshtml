@@ -1,0 +1,68 @@
+﻿@model AciliyetGuncelleViewModel
+
+@{
+    ViewData["Title"] = "Aciliyet Güncelle";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section JqueryValidation{
+<script src="~/lib/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Aciliyet Güncelle</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Home">
+                            <i class="fas fa-home"></i>
+                            Anasayfa
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a asp-area="Admin" asp-action="ListeAciliyet" asp-controller="Aciliyet">
+                            <i class="fas fa-ambulance"></i>
+                            Aciliyet Listesi
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">Aciliyet Güncelle</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="card">
+        <form asp-area="Admin" asp-action="GuncelleAciliyet" asp-controller="Aciliyet" method="post">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-folder-plus"></i>
+                    Aciliyet Güncelle
+                </h3>
+            </div>
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Tanim"></label>
+                    <input type="text" class="form-control" asp-for="Tanim" placeholder="tanım" maxlength=150>
+                    <span asp-validation-for="Tanim" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i>
+                    Kaydet
+                </button>
+                <a asp-area="Admin" asp-action="ListeAciliyet" asp-controller="Aciliyet" class="btn btn-dark float-right">
+                    <i class="fas fa-undo"></i>
+                    Listeye Geri Dön
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
