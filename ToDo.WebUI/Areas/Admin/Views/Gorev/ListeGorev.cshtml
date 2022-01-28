@@ -1,7 +1,7 @@
 ﻿@model List<GorevListViewModel>
 
 @{
-    ViewData["Title"] = "Aciliyet Listesi";
+    ViewData["Title"] = "Görev Listesi";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -31,12 +31,14 @@
         <div class="row">
             <div class="col-12">
                 <p>
-                    <a asp-area="Admin" asp-action="EkleGorev" asp-controller="Aciliyet" class="btn btn-primary">
-                        <i class="fas fa-folder-plus"></i>
+                    <a asp-area="Admin" asp-action="EkleGorev" asp-controller="Gorev" class="btn btn-primary">
+                        <i class="fas fa-clipboard-list"></i>
                         Görev Ekle
                     </a>
                 </p>
-
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                    Launch Default Modal
+                </button>
                 @if (Model.Count > 0)
                 {
                     <div class="card">
@@ -53,8 +55,8 @@
                                         <th class="col-1 text-center">ID</th>
                                         <th>Ad</th>
                                         <th>Açıklama</th>
-                                        <th>Durum</th>
-                                        <th>AciliyetId</th>
+                                        <th class="text-center">Oluşturulma Tarihi</th>
+                                        <th class="text-center">Aciliyet</th>
                                         <th class="col-2 text-center">İşlem</th>
                                     </tr>
                                 </thead>
@@ -65,8 +67,8 @@
                                             <td class="text-center">#@item.Id</td>
                                             <td>@item.Ad</td>
                                             <td>@item.Aciklama</td>
-                                            <td>@item.Durum</td>
-                                            <td>@item.AciliyetId</td>
+                                            <td class="text-center">@item.OlusturmaTarihi.ToString("D")</td>
+                                            <td class="text-center">@item.Aciliyet.Tanim</td>
                                             <td class="text-center">
                                                 <a asp-area="Admin" asp-action="GuncelleGorev" asp-controller="Gorev" asp-route-id="@item.Id" class="btn btn-warning">
                                                     <i class="fas fa-edit"></i>
@@ -97,3 +99,29 @@
     </div>
 </section>
 
+<div class="row">
+
+
+
+    <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Default Modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>

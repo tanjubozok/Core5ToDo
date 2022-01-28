@@ -14,6 +14,11 @@ namespace ToDo.Business.Concrete
             _gorevDal = gorevDal;
         }
 
+        public List<Gorev> GetirAciliyetIleTamamlanmayanlari()
+        {
+            return _gorevDal.GetirAciliyetIleTamamlanmayanlari();
+        }
+
         public List<Gorev> GetirHepsi()
         {
             return _gorevDal.GetirHepsi();
