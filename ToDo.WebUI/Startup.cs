@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -33,12 +35,33 @@ namespace ToDo.WebUI
             services.AddScoped<IRaporDal, EfRaporRepository>();
 
             services.AddDbContext<TodoContext>();
-            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<TodoContext>();
+            services.AddIdentity<AppUser, AppRole>(option =>
+            {
+                option.Password.RequireDigit = false;
+                option.Password.RequireLowercase = false;
+                option.Password.RequireUppercase = false;
+                option.Password.RequiredLength = 4;
+                option.Password.RequireNonAlphanumeric = false;
+            })
+                .AddEntityFrameworkStores<TodoContext>();
+
+            services.ConfigureApplicationCookie(option =>
+            {
+                option.Cookie.Name = "ApplicationCookie";
+                option.Cookie.SameSite = SameSiteMode.Strict;
+                option.Cookie.HttpOnly = true;
+                option.ExpireTimeSpan = System.TimeSpan.FromDays(20);
+                option.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+
+                option.LoginPath = "/Home/GirisYap";
+                option.LogoutPath = "/Home/KayitOl";
+                option.AccessDeniedPath = "/Home/AccessDenied";
+            });
 
             services.AddControllersWithViews();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -53,7 +76,9 @@ namespace ToDo.WebUI
             app.UseStaticFiles();
 
             app.UseRouting();
+            IdentityInitializer.SeedData(userManager, roleManager).Wait();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

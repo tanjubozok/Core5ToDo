@@ -1,0 +1,82 @@
+﻿@model AppUserAdViewModel
+
+@{
+    ViewData["Title"] = "Kayit Ol";
+    Layout = "~/Views/Shared/_LayoutSignInSignUp.cshtml";
+}
+
+@section JqueryValidation{
+<script src="~/lib/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<div class="card-body">
+    <p class="login-box-msg">Kayıt Ol</p>
+    <form asp-action="KayitOl" asp-controller="Home" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="input-group">
+            <input type="text" asp-for="UserName" class="form-control" placeholder="kullanıcı adınız" />
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                </div>
+            </div>
+        </div>
+        <span asp-validation-for="UserName" class="text-danger"></span>
+        <div class="input-group mt-3">
+            <input type="email" asp-for="Email" class="form-control" placeholder="e-posta adresiniz" />
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                </div>
+            </div>
+        </div>
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <div class="input-group mt-3">
+            <input type="text" asp-for="Name" class="form-control" placeholder="adınız" />
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                </div>
+            </div>
+        </div>
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="input-group mt-3">
+            <input type="text" asp-for="SurName" class="form-control" placeholder="soyadınız" />
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                </div>
+            </div>
+        </div>
+        <span asp-validation-for="SurName" class="text-danger"></span>
+        <div class="input-group mt-3">
+            <input type="password" asp-for="Password" class="form-control" placeholder="şifreniz" />
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                </div>
+            </div>
+        </div>
+        <span asp-validation-for="Password" class="text-danger"></span>
+        <div class="input-group mt-3">
+            <input type="password" asp-for="ConfirmPassword" class="form-control" placeholder="şifre tekrar" />
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                </div>
+            </div>
+        </div>
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        <div class="row my-3">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary btn-block">
+                    Kayıt Ol
+                </button>
+            </div>
+        </div>
+    </form>
+    <a asp-action="GirisYap" asp-controller="Home" class="text-center">
+        Zaten üyeliğim var
+    </a>
+</div>

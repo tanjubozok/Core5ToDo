@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.DataAccess", "ToDo.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Entities", "ToDo.Entities\ToDo.Entities.csproj", "{44EDD89B-9B2E-408C-9609-602829E8EEC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.WebUI", "ToDo.WebUI\ToDo.WebUI.csproj", "{35DBA2CD-BD35-47C6-A302-0DE48429FC33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.WebUI", "ToDo.WebUI\ToDo.WebUI.csproj", "{35DBA2CD-BD35-47C6-A302-0DE48429FC33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

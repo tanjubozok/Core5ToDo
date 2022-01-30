@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Blank Page</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="~/theme/fontawesome/css/all.css" />
+    <link rel="stylesheet" href="~/theme/css/adminlte.min.css">
+
+</head>
+<body class="hold-transition register-page">
+    <div class="register-box">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a class="h1"><b>Admin</b>LTE</a>
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/theme/js/adminlte.min.js"></script>
+    <script src="~/theme/js/demo.js"></script>
+
+    @RenderSection("JqueryValidation",false)
+</body>
+</html>

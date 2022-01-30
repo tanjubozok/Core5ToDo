@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDo.Business.Interfaces;
 using ToDo.Entities.Concrete;
@@ -6,6 +7,7 @@ using ToDo.WebUI.Areas.Admin.Models;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class AciliyetController : Controller
     {
