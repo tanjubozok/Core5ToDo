@@ -97,5 +97,16 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
             }
             return View(model);
         }
+
+        public IActionResult GorevSil(int id)
+        {
+            var gorev = _gorevService.GetirId(id);
+            if (gorev != null)
+            {
+                _gorevService.Sil(gorev);
+                return Json(null);
+            }
+            return View();
+        }
     }
 }

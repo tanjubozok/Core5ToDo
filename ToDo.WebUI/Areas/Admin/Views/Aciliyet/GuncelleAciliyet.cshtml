@@ -41,7 +41,7 @@
         <form asp-area="Admin" asp-action="GuncelleAciliyet" asp-controller="Aciliyet" method="post">
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="fas fa-folder-plus"></i>
+                    <i class="fas fa-ambulance"></i>
                     Aciliyet Güncelle
                 </h3>
             </div>
@@ -54,14 +54,14 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-success">
-                    <i class="fas fa-save"></i>
-                    Kaydet
-                </button>
-                <a asp-area="Admin" asp-action="ListeAciliyet" asp-controller="Aciliyet" class="btn btn-dark float-right">
+                <a asp-area="Admin" asp-action="ListeAciliyet" asp-controller="Aciliyet" class="btn btn-dark">
                     <i class="fas fa-undo"></i>
                     Listeye Geri Dön
                 </a>
+                <button type="submit" class="btn btn-success float-right">
+                    <i class="fas fa-save"></i>
+                    Kaydet
+                </button>
             </div>
         </form>
     </div>
