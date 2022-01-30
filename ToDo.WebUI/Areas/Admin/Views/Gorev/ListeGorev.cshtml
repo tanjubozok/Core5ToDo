@@ -5,33 +5,6 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-@section JqueryValidation{
-<script>
-    $(document).ready(function(){
-        alert("giriş");
-        $('#modal-gorev-sil').on('show.bs.modal',function(event){
-            var tetikleyenElement =$(event.relatedTarget);
-            var id=tetikleyenElement.data("gorev-id");
-            alert(id);
-            $("#btn-gorev-sil").click(function(){
-                $.ajax({
-                    type="Get",
-                    url="./Gorev/GorevSil",
-                    data={id:id},
-                    dataType="json",
-                    contentType="application/json; charset=utf-8;",
-                    success:function() {
-                        window.location.reload();
-                    },error:function(error){
-                        alert(error.statusText);
-                    }
-                });
-            });
-        });
-    });
-</script>
-}
-
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -55,7 +28,7 @@
 
 <section class="content">
     <div class="container-fluid">
-        <div class="row">
+        <div class="row table-gorev-liste">
             <div class="col-12">
                 <p>
                     <a asp-area="Admin" asp-action="EkleGorev" asp-controller="Gorev" class="btn btn-primary">
@@ -148,3 +121,44 @@
         </div>
     </div>
 </div>
+
+@section JqueryValidation{
+<script>
+    $(document).ready(function () {
+        $('#modal-gorev-sil').on('show.bs.modal', function (event) {
+            var tetikleyenElement = $(event.relatedTarget);
+            var id = tetikleyenElement.data("gorev-id");
+            $("#btn-gorev-sil").click(function () {
+                $.ajax({
+                    url: "/Admin/Gorev/GorevSil",
+                    dataType: "Html",
+                    type: "Get",
+                    data: { id: id },
+                    success: function (data) {
+                        window.location.reload();
+                    },
+                    error: function (xhr, exception) {
+                        var msg = "";
+                        if (xhr.status === 0) {
+                            msg = "Not connect.\n Verify Network." + xhr.responseText;
+                        } else if (xhr.status == 404) {
+                            msg = "Requested page not found. [404]" + xhr.responseText;
+                        } else if (xhr.status == 500) {
+                            msg = "Internal Server Error [500]." + xhr.responseText;
+                        } else if (exception === "parsererror") {
+                            msg = "Requested JSON parse failed.";
+                        } else if (exception === "timeout") {
+                            msg = "Time out error." + xhr.responseText;
+                        } else if (exception === "abort") {
+                            msg = "Ajax request aborted.";
+                        } else {
+                            msg = "Error:" + xhr.status + " " + xhr.responseText;
+                        }
+                        alert(msg);
+                    }
+                });
+            });
+        });
+    });
+</script>
+}
