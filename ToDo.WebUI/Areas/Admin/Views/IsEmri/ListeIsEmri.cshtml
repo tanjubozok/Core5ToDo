@@ -1,0 +1,119 @@
+﻿@model List<GorevListAllViewModel>
+
+@{
+    ViewData["Title"] = "Görev Listesi";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Görev Listesi</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Home">
+                            <i class="fas fa-home"></i>
+                            Anasayfa
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">Görev Listesi</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    <a asp-area="Admin" asp-action="EkleAciliyet" asp-controller="Aciliyet" class="btn btn-primary">
+                        <i class="fas fa-clipboard-list"></i>
+                        Görev Ekle
+                    </a>
+                </p>
+
+                @if (Model.Count > 0)
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-clipboard-list"></i>
+                                Görev Listesi
+                            </h3>
+                        </div>
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-striped table-bordered table-hover table-head-fixed text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th class="col-1 text-center">ID</th>
+                                        <th class="col-2">Ad</th>
+                                        <th>Açıklama</th>
+                                        <th class="col-1 text-center">Oluşturma Tarihi</th>
+                                        <th class="col-1 text-center">Kullanıcı</th>
+                                        <th class="col-1 text-center">Aciliyet</th>
+                                        <th class="col-2 text-center">İşlem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-center">#@item.Id</td>
+                                            <td>@item.Ad</td>
+                                            <td>@item.Aciklama</td>
+                                            <td class="text-center">@item.OluşturmaTarihi.ToString("D")</td>
+                                            <td class="text-center">
+                                                @{
+                                                    if (item.AppUser == null)
+                                                    {
+                                                        <small class="badge badge-danger">
+                                                            <span class="fas fa-user-slash"></span>
+                                                            Çalışan Personel Yok
+                                                        </small>
+                                                    }
+                                                    else
+                                                    {
+                                                        <small class="badge badge-primary">
+                                                            <span class="fas fa-user"></span>
+                                                            @item.AppUser.Name çalışıyor
+                                                        </small>
+                                                    }
+                                                }
+                                            </td>
+                                            <td class="text-center">@item.Aciliyet.Tanim</td>
+                                            <td class="text-center">
+                                                <a asp-area="Admin" asp-action="GuncelleAciliyet" asp-controller="Aciliyet" asp-route-id="@item.Id" class="btn btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                    Düzenle
+                                                </a>
+                                                <a class="btn btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                    Sil
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5>
+                            <i class="icon fas fa-exclamation-triangle"></i>
+                        </h5>
+                        Sistemde kayıtlı bir aciliyet bulunamadı.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

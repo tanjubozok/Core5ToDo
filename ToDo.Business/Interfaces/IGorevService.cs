@@ -6,5 +6,6 @@ namespace ToDo.Business.Interfaces
     public interface IGorevService : IGenericService<Gorev>
     {
         List<Gorev> GetirAciliyetIleTamamlanmayanlari();
+        List<Gorev> GetirTumTablolarla();
     }
 }

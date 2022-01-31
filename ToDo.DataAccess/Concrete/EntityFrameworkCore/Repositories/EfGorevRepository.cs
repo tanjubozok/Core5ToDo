@@ -17,5 +17,16 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
                   .Where(x => x.Durum == false)
                   .OrderByDescending(x => x.OlusturmaTarihi).ToList();
         }
+
+        public List<Gorev> GetirTumTablolarla()
+        {
+            using var context = new TodoContext();
+            return context.Gorevler
+                  .Include(x => x.Aciliyet)
+                  .Include(x => x.Raporlar)
+                  .Include(x => x.AppUser)
+                  .Where(x => x.Durum == false)
+                  .OrderByDescending(x => x.OlusturmaTarihi).ToList();
+        }
     }
 }

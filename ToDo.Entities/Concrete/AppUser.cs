@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using ToDo.Entities.Interfaces;
 
 namespace ToDo.Entities.Concrete
 {
-    public class AppUser : IdentityUser<int>
+    public class AppUser : IdentityUser<int>, ITable
     {
         public string Name { get; set; }
         public string SurName { get; set; }

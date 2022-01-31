@@ -6,5 +6,6 @@ namespace ToDo.DataAccess.Interfaces
     public interface IGorevDal : IGenericDal<Gorev>
     {
         List<Gorev> GetirAciliyetIleTamamlanmayanlari();
+        List<Gorev> GetirTumTablolarla();
     }
 }

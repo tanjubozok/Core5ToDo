@@ -34,6 +34,9 @@ namespace ToDo.WebUI
             services.AddScoped<IRaporService, RaporManager>();
             services.AddScoped<IRaporDal, EfRaporRepository>();
 
+            services.AddScoped<IAppUserService, AppUserManager>();
+            services.AddScoped<IAppUserDal, EfAppUserRepository>();
+
             services.AddDbContext<TodoContext>();
             services.AddIdentity<AppUser, AppRole>(option =>
             {

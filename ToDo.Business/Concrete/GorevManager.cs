@@ -29,6 +29,11 @@ namespace ToDo.Business.Concrete
             return _gorevDal.GetirId(id);
         }
 
+        public List<Gorev> GetirTumTablolarla()
+        {
+            return _gorevDal.GetirTumTablolarla();
+        }
+
         public void Guncelle(Gorev model)
         {
             _gorevDal.Guncelle(model);
