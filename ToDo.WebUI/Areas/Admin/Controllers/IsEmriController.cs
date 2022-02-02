@@ -132,6 +132,8 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
 
         public IActionResult GorevPersonelDetay(int id)
         {
+            TempData["Active"] = "isemri";
+
             var gorev = _gorevService.GetirRaporlarIleId(id);
             GorevListAllViewModel model = new()
             {

@@ -10,7 +10,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Göreve Personel Ata</h1>
+                <h1>Görev Personel Ata</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -26,7 +26,7 @@
                             Görev Listesi
                         </a>
                     </li>
-                    <li class="breadcrumb-item active">Göreve Personel Ata</li>
+                    <li class="breadcrumb-item active">Görev Personel Ata</li>
                 </ol>
             </div>
         </div>
@@ -49,7 +49,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-window-restore"></i>
-                        Göreve Detay
+                        Görev Detay
                     </h3>
                 </div>
                 <div class="card-body">
@@ -77,11 +77,14 @@
         <div class="col-md-8">
             <div class="card card-solid">
                 <div class="card-header">
-                    <form asp-action="EklePersonelGorev" asp-controller="IsEmri">
+                    <form asp-action="EklePersonelGorev" asp-controller="IsEmri" method="get">
                         <div class="input-group">
                             <input type="text" name="s" class="form-control rounded-0" placeholder="personel ara">
                             <span class="input-group-append">
-                                <button type="submit" class="btn btn-info btn-flat">ara</button>
+                                <button type="submit" class="btn btn-info btn-flat">
+                                    <i class="fas fa-search"></i>
+                                    arama yap
+                                </button>
                             </span>
                         </div>
                     </form>
@@ -111,14 +114,11 @@
                                     </div>
                                     <div class="card-footer">
                                         <div class="text-right">
-                                            <a href="#" class="btn btn-sm bg-teal">
-                                                <i class="fas fa-comments"></i>
-                                            </a>
                                             <a asp-action="GorevlendirPersonel" asp-controller="IsEmri"
                                            asp-route-PersonelId="@item.Id"
                                            asp-route-GorevId="@Model.Id"
-                                           class="btn btn-sm btn-primary">
-                                                <i class="fas fa-user"></i>
+                                           class="btn btn-sm btn-outline-secondary">
+                                                <i class="fas fa-user-edit"></i>
                                                 Görev Ata
                                             </a>
                                         </div>

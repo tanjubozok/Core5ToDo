@@ -25,6 +25,12 @@
                             Görev Listesi
                         </a>
                     </li>
+                     <li class="breadcrumb-item">
+                        <a asp-action="EklePersonelGorev" asp-route-id="@Model.Gorev.Id">
+                            <i class="fas fa-clipboard-list"></i>
+                            Görev Personel Ata
+                        </a>
+                    </li>
                     <li class="breadcrumb-item active">Göreve Personel Ata</li>
                 </ol>
             </div>
@@ -93,7 +99,7 @@
                             <input type="hidden" name="PersonelId" value="@Model.AppUser.Id" />
                             <input type="hidden" name="GorevId" value="@Model.Gorev.Id" />
                             <button type="submit" class="btn btn-success btn-flat float-right">
-                                <i class="fas fa-save"></i>
+                                <i class="fas fa-check-circle"></i>
                                 Görevi Ata
                             </button>
                             <a asp-action="EklePersonelGorev" asp-route-id="@Model.Gorev.Id" class="btn btn-dark btn-flat">

@@ -19,6 +19,12 @@
                             Anasayfa
                         </a>
                     </li>
+                     <li class="breadcrumb-item">
+                        <a asp-area="Admin" asp-action="ListeIsEmri" asp-controller="IsEmri">
+                            <i class="fas fa-clipboard-list"></i>
+                            Görev Listesi
+                        </a>
+                    </li>
                     <li class="breadcrumb-item active">Personel Görev Detay</li>
                 </ol>
             </div>
@@ -33,7 +39,11 @@
                 <p>
                     <a class="btn btn-success btn-flat">
                         <i class="fas fa-file-excel"></i>
-                        Excel İndir
+                        Excel
+                    </a>
+                    <a class="btn btn-danger btn-flat">
+                        <i class="fas fa-file-pdf"></i>
+                        Pdf
                     </a>
                 </p>
 
