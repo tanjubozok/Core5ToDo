@@ -1,0 +1,109 @@
+﻿@model PersonelGorevlendirListViewModel
+
+@{
+    ViewData["Title"] = "Göreve Personel Ata";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Göreve Personel Ata</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Home">
+                            <i class="fas fa-home"></i>
+                            Anasayfa
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a asp-area="Admin" asp-action="ListeIsEmri" asp-controller="IsEmri">
+                            <i class="fas fa-clipboard-list"></i>
+                            Görev Listesi
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">Göreve Personel Ata</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-window-restore"></i>
+                        Göreve Detay
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="callout callout-danger">
+                        <h5>Görev Adı</h5>
+                        <p>@Model.Gorev.Ad</p>
+                        <hr />
+                        <h5>Açıklama</h5>
+                        <p>@Model.Gorev.Aciklama</p>
+                        <hr />
+                        <h5>Aciliyet Durumu</h5>
+                        <p>
+                            <div class="badge badge-warning">
+                                <span class="fas fa-clipboard"></span>
+                                @Model.Gorev.Aciliyet.Tanim
+                            </div>
+                        </p>
+                        <hr />
+                        <h5>Oluşturma Tarihi</h5>
+                        <p>@Model.Gorev.OlusturmaTarihi.ToString("D")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="col-12 col-sm-12 col-md-12 d-flex align-items-stretch flex-column">
+                <div class="card bg-light d-flex flex-fill">
+                    <div class="card-header">
+                        <h1 class="text-center">
+                            Personeli görev atamak istediğinize emin misiniz?
+                        </h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h2 class="lead"><b>@Model.AppUser.Name @Model.AppUser.SurName</b></h2>
+                                <p class="text-muted">
+                                    @Model.AppUser.Email
+                                </p>
+                                <hr />
+                                <p class="text-muted">
+                                    <getirGorevAppUserId asp-route-id="@Model.Gorev.Id"></getirGorevAppUserId>
+                                </p>
+                            </div>
+                            <div class="col-4 text-center">
+                                <img src="~/img/@Model.AppUser.Picture" alt="user-avatar" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <form asp-action="EklePersonelGorev" asp-controller="IsEmri" method="post">
+                            <input type="hidden" name="PersonelId" value="@Model.AppUser.Id" />
+                            <input type="hidden" name="GorevId" value="@Model.Gorev.Id" />
+                            <button type="submit" class="btn btn-success btn-flat float-right">
+                                <i class="fas fa-save"></i>
+                                Görevi Ata
+                            </button>
+                            <a asp-action="EklePersonelGorev" asp-route-id="@Model.Gorev.Id" class="btn btn-dark btn-flat">
+                                <i class="fas fa-undo"></i>
+                                Listeye Geri Dön
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

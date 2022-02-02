@@ -14,9 +14,19 @@ namespace ToDo.Business.Concrete
             _gorevDal = gorevDal;
         }
 
+        public Gorev GetirAciliyetIleId(int id)
+        {
+            return _gorevDal.GetirAciliyetIleId(id);
+        }
+
         public List<Gorev> GetirAciliyetIleTamamlanmayanlari()
         {
             return _gorevDal.GetirAciliyetIleTamamlanmayanlari();
+        }
+
+        public List<Gorev> GetirAppUserId(int appUserId)
+        {
+            return _gorevDal.GetirAppUserId(appUserId);
         }
 
         public List<Gorev> GetirHepsi()
@@ -27,6 +37,11 @@ namespace ToDo.Business.Concrete
         public Gorev GetirId(int id)
         {
             return _gorevDal.GetirId(id);
+        }
+
+        public Gorev GetirRaporlarIleId(int id)
+        {
+            return _gorevDal.GetirRaporlarIleId(id);
         }
 
         public List<Gorev> GetirTumTablolarla()

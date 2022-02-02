@@ -9,18 +9,43 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
 {
     public class EfGorevRepository : EfGenericRepository<Gorev>, IGorevDal
     {
+        public Gorev GetirAciliyetIleId(int id)
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                  .Include(x => x.Aciliyet)
+                  .FirstOrDefault(x => x.Durum == false && x.Id == id);
+        }
+
         public List<Gorev> GetirAciliyetIleTamamlanmayanlari()
         {
-            using var context = new TodoContext();
+            using TodoContext context = new();
             return context.Gorevler
                   .Include(x => x.Aciliyet)
                   .Where(x => x.Durum == false)
                   .OrderByDescending(x => x.OlusturmaTarihi).ToList();
         }
 
+        public Gorev GetirRaporlarIleId(int id)
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                .Include(x => x.Raporlar)
+                .Include(x => x.AppUser)
+                .FirstOrDefault(x => x.Id == id);
+        }
+
+        public List<Gorev> GetirAppUserId(int appUserId)
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                .Where(x => x.AppUserId == appUserId)
+                .ToList();
+        }
+
         public List<Gorev> GetirTumTablolarla()
         {
-            using var context = new TodoContext();
+            using TodoContext context = new();
             return context.Gorevler
                   .Include(x => x.Aciliyet)
                   .Include(x => x.Raporlar)

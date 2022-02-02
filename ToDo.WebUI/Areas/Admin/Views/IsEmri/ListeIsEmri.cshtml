@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-12">
                 <p>
-                    <a asp-area="Admin" asp-action="EkleAciliyet" asp-controller="Aciliyet" class="btn btn-primary">
+                    <a asp-area="Admin" asp-action="EkleAciliyet" asp-controller="Aciliyet" class="btn btn-primary btn-flat">
                         <i class="fas fa-clipboard-list"></i>
                         Görev Ekle
                     </a>
@@ -56,6 +56,7 @@
                                         <th class="col-1 text-center">Oluşturma Tarihi</th>
                                         <th class="col-1 text-center">Kullanıcı</th>
                                         <th class="col-1 text-center">Aciliyet</th>
+                                        <th class="col-1 text-center">Raporlar</th>
                                         <th class="col-2 text-center">İşlem</th>
                                     </tr>
                                 </thead>
@@ -86,15 +87,24 @@
                                                 }
                                             </td>
                                             <td class="text-center">@item.Aciliyet.Tanim</td>
+                                            <td class="text-center">@item.Raporlar.Count</td>
                                             <td class="text-center">
-                                                <a asp-area="Admin" asp-action="GuncelleAciliyet" asp-controller="Aciliyet" asp-route-id="@item.Id" class="btn btn-warning">
-                                                    <i class="fas fa-edit"></i>
-                                                    Düzenle
-                                                </a>
-                                                <a class="btn btn-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                    Sil
-                                                </a>
+                                                @{
+                                                    if (item.AppUser == null)
+                                                    {
+                                                        <a asp-action="EklePersonelGorev" asp-controller="IsEmri" asp-route-id="@item.Id" class="btn btn-secondary btn-sm btn-flat">
+                                                            <span class="fas fa-user-plus"></span>
+                                                            Personel Ata
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-action="GorevPersonelDetay" asp-controller="IsEmri" asp-route-id="@item.Id" class="btn btn-secondary btn-sm btn-flat">
+                                                            <span class="fas fa-address-card"></span>
+                                                            Detay
+                                                        </a>
+                                                    }
+                                                }
                                             </td>
                                         </tr>
                                     }

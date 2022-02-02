@@ -31,7 +31,7 @@
         <div class="row table-gorev-liste">
             <div class="col-12">
                 <p>
-                    <a asp-area="Admin" asp-action="EkleGorev" asp-controller="Gorev" class="btn btn-primary">
+                    <a asp-area="Admin" asp-action="EkleGorev" asp-controller="Gorev" class="btn btn-primary btn-flat">
                         <i class="fas fa-clipboard-list"></i>
                         Görev Ekle
                     </a>
@@ -67,11 +67,11 @@
                                             <td class="text-center">@item.OlusturmaTarihi.ToString("D")</td>
                                             <td class="text-center">@item.Aciliyet.Tanim</td>
                                             <td class="text-center">
-                                                <a asp-area="Admin" asp-action="GuncelleGorev" asp-controller="Gorev" asp-route-id="@item.Id" class="btn btn-warning">
+                                                <a asp-area="Admin" asp-action="GuncelleGorev" asp-controller="Gorev" asp-route-id="@item.Id" class="btn btn-warning btn-flat">
                                                     <i class="fas fa-edit"></i>
                                                     Düzenle
                                                 </a>
-                                                <a class="btn btn-danger" data-toggle="modal" data-target="#modal-gorev-sil" data-gorev-id="@item.Id">
+                                                <a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-gorev-sil" data-gorev-id="@item.Id">
                                                     <i class="fas fa-trash"></i>
                                                     Sil
                                                 </a>
@@ -109,11 +109,11 @@
                 <p>Silmek istediğinizden emin misiniz?</p>
             </div>
             <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark btn-flat" data-dismiss="modal">
                     <i class="fas fa-undo"></i>
                     Listeye Geri Dön
                 </button>
-                <button type="button" id="btn-gorev-sil" class="btn btn-danger">
+                <button type="button" id="btn-gorev-sil" class="btn btn-danger btn-flat">
                     <i class="fas fa-trash"></i>
                     Sil
                 </button>

@@ -1,0 +1,166 @@
+﻿@model GorevListViewModel
+
+@{
+    ViewData["Title"] = "Göreve Personel Ata";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    string s = (string)ViewBag.Aranan;
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Göreve Personel Ata</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Home">
+                            <i class="fas fa-home"></i>
+                            Anasayfa
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a asp-area="Admin" asp-action="ListeIsEmri" asp-controller="IsEmri">
+                            <i class="fas fa-clipboard-list"></i>
+                            Görev Listesi
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">Göreve Personel Ata</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="row">
+        @if (!string.IsNullOrWhiteSpace(s))
+        {
+            <div class="col-md-12">
+                <div class="alert alert-info alert-dismissible">
+                    <a asp-action="EklePersonelGorev" asp-controller="IsEmri" asp-route-id="@Model.Id" class="btn btn-dark btn-flat float-right mt-2">arama filtresini temizle</a>
+                    <h5><i class="icon fas fa-info"></i> @s</h5> kelimesi için sonuçları görüyorsunuz
+                </div>
+            </div>
+        }
+
+        <div class="col-md-4 mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-window-restore"></i>
+                        Göreve Detay
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="callout callout-danger">
+                        <h5>Görev Adı</h5>
+                        <p>@Model.Ad</p>
+                        <hr />
+                        <h5>Açıklama</h5>
+                        <p>@Model.Aciklama</p>
+                        <hr />
+                        <h5>Aciliyet Durumu</h5>
+                        <p>
+                            <div class="badge badge-warning">
+                                <span class="fas fa-clipboard"></span>
+                                @Model.Aciliyet.Tanim
+                            </div>
+                        </p>
+                        <hr />
+                        <h5>Oluşturma Tarihi</h5>
+                        <p>@Model.OlusturmaTarihi.ToString("D")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card card-solid">
+                <div class="card-header">
+                    <form asp-action="EklePersonelGorev" asp-controller="IsEmri">
+                        <div class="input-group">
+                            <input type="text" name="s" class="form-control rounded-0" placeholder="personel ara">
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-info btn-flat">ara</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body pb-0">
+                    <div class="row">
+                        @foreach (var item in (List<AppUserListViewModel>)ViewBag.Personeller)
+                        {
+                            <div class="col-12 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
+                                <div class="card bg-light d-flex flex-fill">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h2 class="lead"><b>@item.Name @item.SurName</b></h2>
+                                                <p class="text-muted">
+                                                    @item.Email
+                                                </p>
+                                                <hr />
+                                                <p class="text-muted">
+                                                    <getirGorevAppUserId asp-route-id="@Model.Id"></getirGorevAppUserId>
+                                                </p>
+                                            </div>
+                                            <div class="col-4 text-center">
+                                                <img src="~/img/@item.Picture" alt="user-avatar" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="text-right">
+                                            <a href="#" class="btn btn-sm bg-teal">
+                                                <i class="fas fa-comments"></i>
+                                            </a>
+                                            <a asp-action="GorevlendirPersonel" asp-controller="IsEmri"
+                                           asp-route-PersonelId="@item.Id"
+                                           asp-route-GorevId="@Model.Id"
+                                           class="btn btn-sm btn-primary">
+                                                <i class="fas fa-user"></i>
+                                                Görev Ata
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <nav aria-label="Contacts Page Navigation">
+                        <ul class="pagination justify-content-center m-0">
+
+                            @if (!string.IsNullOrWhiteSpace(s))
+                            {
+                                @for (int i = 1; i <= ViewBag.ToplamSayfa; i++)
+                                {
+                                    <li class="page-item @(ViewBag.AktifSayfa == i ? "active":"")">
+                                        <a class="page-link"
+                                   asp-action="EklePersonelGorev"
+                                   asp-route-id="@Model.Id"
+                                   asp-route-sayfa="@i"
+                                   asp-route-s="@s">@i</a>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                @for (int i = 1; i <= ViewBag.ToplamSayfa; i++)
+                                {
+                                    <li class="page-item @(ViewBag.AktifSayfa == i ? "active":"")">
+                                        <a class="page-link"
+                                   asp-action="EklePersonelGorev"
+                                   asp-route-id="@Model.Id"
+                                   asp-route-sayfa="@i">@i</a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -18,5 +18,10 @@ namespace ToDo.Business.Concrete
         {
             return _userDal.GetirAdminOlmayanlar();
         }
+
+        public List<AppUser> GetirAdminOlmayanlar(out int toplamSayfa, string arabacakKelime, int aktifSayfa)
+        {
+            return _userDal.GetirAdminOlmayanlar(out toplamSayfa, arabacakKelime, aktifSayfa);
+        }
     }
 }
