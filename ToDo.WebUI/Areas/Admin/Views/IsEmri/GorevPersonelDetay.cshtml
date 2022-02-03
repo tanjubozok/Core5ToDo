@@ -19,7 +19,7 @@
                             Anasayfa
                         </a>
                     </li>
-                     <li class="breadcrumb-item">
+                    <li class="breadcrumb-item">
                         <a asp-area="Admin" asp-action="ListeIsEmri" asp-controller="IsEmri">
                             <i class="fas fa-clipboard-list"></i>
                             Görev Listesi
@@ -31,17 +31,16 @@
         </div>
     </div>
 </section>
-
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <p>
-                    <a class="btn btn-success btn-flat">
+                    <a asp-action="GetirExcel" asp-route-id="@Model.Id" class="btn btn-success btn-flat">
                         <i class="fas fa-file-excel"></i>
                         Excel
                     </a>
-                    <a class="btn btn-danger btn-flat">
+                    <a asp-action="GetirPdf" asp-route-id="@Model.Id" class="btn btn-danger btn-flat">
                         <i class="fas fa-file-pdf"></i>
                         Pdf
                     </a>

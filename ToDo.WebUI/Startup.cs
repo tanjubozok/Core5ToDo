@@ -37,6 +37,8 @@ namespace ToDo.WebUI
             services.AddScoped<IAppUserService, AppUserManager>();
             services.AddScoped<IAppUserDal, EfAppUserRepository>();
 
+            services.AddScoped<IDosyaService, DosyaManager>();
+
             services.AddDbContext<TodoContext>();
             services.AddIdentity<AppUser, AppRole>(option =>
             {

@@ -31,4 +31,8 @@
     <ProjectReference Include="..\ToDo.Business\ToDo.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\documents\" />
+  </ItemGroup>
+
 </Project>

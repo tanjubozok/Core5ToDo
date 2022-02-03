@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ToDo.Business.Interfaces;
@@ -16,12 +17,14 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         private readonly IAppUserService _userService;
         private readonly IGorevService _gorevService;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IDosyaService _dosyaService;
 
-        public IsEmriController(IAppUserService userService, IGorevService gorevService, UserManager<AppUser> userManager)
+        public IsEmriController(IAppUserService userService, IGorevService gorevService, UserManager<AppUser> userManager, IDosyaService dosyaService)
         {
             _userService = userService;
             _gorevService = gorevService;
             _userManager = userManager;
+            _dosyaService = dosyaService;
         }
 
         public IActionResult ListeIsEmri()
@@ -144,6 +147,24 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
                 AppUser = gorev.AppUser
             };
             return View(model);
+        }
+
+        public IActionResult GetirExcel(int id)
+        {
+            var list = _gorevService.GetirRaporlarIleId(id).Raporlar;
+            const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            string fileDownloadName = Guid.NewGuid() + ".xlsx";
+
+            return File(_dosyaService.AktarExcel(list), contentType, fileDownloadName);
+        }
+
+        public IActionResult GetirPdf(int id)
+        {
+            var list = _gorevService.GetirRaporlarIleId(id).Raporlar;
+            const string contentType = "application/pdf";
+            string fileDownloadName = Guid.NewGuid() + ".pdf";
+
+            return File(_dosyaService.AktarPdf(list), contentType, fileDownloadName);
         }
     }
 }
