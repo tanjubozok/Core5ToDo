@@ -22,7 +22,8 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
                         Name = u.Name,
                         SurName = u.SurName,
                         Email = u.Email,
-                        UserName = u.UserName
+                        UserName = u.UserName,
+                        Picture = u.Picture
                     }).ToList();
         }
 
@@ -39,7 +40,8 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
                               Name = u.Name,
                               SurName = u.SurName,
                               Email = u.Email,
-                              UserName = u.UserName
+                              UserName = u.UserName,
+                              Picture = u.Picture
                           });
 
             toplamSayfa = (int)Math.Ceiling((double)result.Count() / 3);

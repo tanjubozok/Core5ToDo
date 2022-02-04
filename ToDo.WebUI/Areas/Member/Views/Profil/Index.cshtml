@@ -1,0 +1,114 @@
+﻿@model AppUserListViewModel
+
+@{
+    ViewData["Title"] = "Profilim";
+    Layout = "~/Areas/Member/Views/Shared/_Layout.cshtml";
+}
+
+@section JqueryValidation{
+<script src="~/lib/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#resim").change(function(e){
+            $("#alan-onizleme").show();
+            $("#resim-onizleme").attr("src",URL.createObjectURL(e.target.files[0]));
+        });
+    });
+</script>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Profilim</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a asp-area="Member" asp-action="Index" asp-controller="Home">
+                            <i class="fas fa-home"></i>
+                            Anasayfa
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">Profilim</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5><i class="icon fas fa-check"></i> Başarılı Güncelleme!</h5>
+        @TempData["message"]
+    </div>
+}
+
+<section class="content">
+    <div class="card">
+        <form asp-area="Member" asp-action="Index" asp-controller="Profil" method="post" enctype="multipart/form-data">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-user"></i>
+                    Profilim
+                </h3>
+            </div>
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input type="text" class="form-control" asp-for="Name" placeholder="ad" maxlength=100>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SurName"></label>
+                    <input type="text" class="form-control" asp-for="SurName" placeholder="soyad" maxlength=100>
+                    <span asp-validation-for="SurName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input type="email" class="form-control" asp-for="Email" placeholder="e-posta">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4 my-2">
+                            <label>Kullanılan Resim</label>
+                            <img src="~/img/@Model.Picture" alt="@Model.Name" class="profile-user-img img-fluid img-circle elevation-2 w-25">
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4 my-2" id="alan-onizleme" style="display:none;">
+                            <label>Yeni Resim Önizleme</label>
+                            <img src="" id="resim-onizleme" alt="@Model.Name" class="profile-user-img img-fluid img-circle elevation-2 w-25">
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Picture"></label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" asp-for="Picture" id="resim" name="Resim" class="custom-file-input">
+                            <label class="custom-file-label" asp-for="Picture"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-success btn-flat float-right">
+                    <i class="fas fa-check-circle"></i>
+                    Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
