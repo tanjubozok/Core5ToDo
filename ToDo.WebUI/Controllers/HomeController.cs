@@ -19,6 +19,8 @@ namespace ToDo.WebUI.Controllers
 
         public IActionResult Index()
         {
+            TempData["Active"] = "homepage";
+
             return View();
         }
 
@@ -100,6 +102,12 @@ namespace ToDo.WebUI.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        public async Task<IActionResult> CikisYap()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index");
         }
     }
 }
