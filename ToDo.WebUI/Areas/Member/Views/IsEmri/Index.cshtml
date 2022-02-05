@@ -1,0 +1,121 @@
+﻿@model List<GorevListAllViewModel>
+
+@{
+    ViewData["Title"] = "Görevler";
+    Layout = "~/Areas/Member/Views/Shared/_Layout.cshtml";
+
+    int index = 0;
+    string cardHeader = "card-primary";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Görevler</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a asp-area="" asp-action="Index" asp-controller="Home">
+                            <i class="fas fa-home"></i>
+                            Anasayfa
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">Görevler</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div id="accordion">
+
+        @foreach (var item in Model)
+        {
+            if (item.Aciliyet.Id == 1)
+            {
+                cardHeader = "card-danger";
+            }
+
+            index++;
+
+            <div class="card @cardHeader">
+                <div class="card-header">
+                    <h4 class="card-title w-100">
+                        <a class="d-block w-100 collapsed" data-toggle="collapse" href="#collapseOne-@index" aria-expanded="false">
+                            <i class="fas fa-clipboard-list mr-1"></i>
+                            @item.Ad - Görevi
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne-@index" class="collapse" data-parent="#accordion" style="">
+                    <div class="card-body">
+                        <strong class="text-danger"><i class="fas fa-map-marker-alt mr-1"></i>Aciliyet Durumu</strong>
+                        <p class="text-muted">@item.Aciliyet.Tanim</p>
+                        <hr>
+                        <strong><i class="fas fa-file-alt mr-1"></i>Açıklaması</strong>
+                        <p class="text-muted">@item.Aciklama</p>
+                        <hr>
+                        <strong><i class="far fa-folder-open mr-1"></i>Rapor Sayısı</strong>
+                        <p class="text-muted">@item.Raporlar.Count</p>
+                    </div>
+                    <div class="card-footer">
+                        @if (@item.Raporlar.Count > 0)
+                        {
+                            <button class="btn btn-primary btn-flat" type="button" data-toggle="collapse" data-target="#collapseExample-@index" aria-expanded="false" aria-controls="collapseExample">
+                                <i class="far fa-file-alt"></i>
+                                Raporlar
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary btn-flat" type="button">
+                                <i class="fas fa-file-signature"></i>
+                                Rapor Yaz
+                            </button>
+                        }
+                        <button class="btn btn-success btn-flat">
+                            <i class="fas fa-clipboard-check"></i>
+                            Tamamlandı Olarak İşaretle
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="collapse" id="collapseExample-@index">
+                                <div class="card card-body">
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="table table-striped table-bordered table-hover table-sm table-head-fixed text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tanım</th>
+                                                    <th>Detay</th>
+                                                    <th class="col-1 text-center">İşlem</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var itemRapor in item.Raporlar)
+                                                {
+                                                    <tr>
+                                                        <td>@itemRapor.Tanim</td>
+                                                        <td>@itemRapor.Detay</td>
+                                                        <td class="text-center">
+                                                            <a class="btn btn-warning btn-sm btn-flat">
+                                                                <i class="fas fa-edit"></i>
+                                                                Düzenle
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

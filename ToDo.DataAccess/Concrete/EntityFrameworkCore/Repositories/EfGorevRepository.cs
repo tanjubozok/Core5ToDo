@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using ToDo.DataAccess.Concrete.EntityFrameworkCore.Contexts;
 using ToDo.DataAccess.Interfaces;
 using ToDo.Entities.Concrete;
@@ -51,6 +53,17 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
                   .Include(x => x.Raporlar)
                   .Include(x => x.AppUser)
                   .Where(x => x.Durum == false)
+                  .OrderByDescending(x => x.OlusturmaTarihi).ToList();
+        }
+
+        public List<Gorev> GetirTumTablolarla(Expression<Func<Gorev, bool>> filter)
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                  .Include(x => x.Aciliyet)
+                  .Include(x => x.Raporlar)
+                  .Include(x => x.AppUser)
+                  .Where(filter)
                   .OrderByDescending(x => x.OlusturmaTarihi).ToList();
         }
     }

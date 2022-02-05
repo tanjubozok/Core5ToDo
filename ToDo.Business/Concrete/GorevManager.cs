@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using ToDo.Business.Interfaces;
 using ToDo.DataAccess.Interfaces;
 using ToDo.Entities.Concrete;
@@ -47,6 +49,11 @@ namespace ToDo.Business.Concrete
         public List<Gorev> GetirTumTablolarla()
         {
             return _gorevDal.GetirTumTablolarla();
+        }
+
+        public List<Gorev> GetirTumTablolarla(Expression<Func<Gorev, bool>> filter)
+        {
+            return _gorevDal.GetirTumTablolarla(filter);
         }
 
         public void Guncelle(Gorev model)
