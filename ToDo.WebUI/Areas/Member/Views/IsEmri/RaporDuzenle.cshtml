@@ -1,0 +1,84 @@
+﻿@model RaporGuncelleViewModel
+
+@{
+    ViewData["Title"] = "Rapor Düzenle";
+    Layout = "~/Areas/Member/Views/Shared/_Layout.cshtml";
+}
+
+@section JqueryValidation{
+<script src="~/lib/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Rapor Güncelle</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Home">
+                            <i class="fas fa-home"></i>
+                            Anasayfa
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a asp-area="Member" asp-action="Index" asp-controller="IsEmri">
+                            <i class="fas fa-info-circle"></i>
+                            Görevlerim
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">Rapor Güncelle</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="card">
+        <form asp-area="Member" asp-action="RaporDuzenle" asp-controller="IsEmri" method="post">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-info-circle"></i>
+                    Rapor Güncelle
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="callout callout-info">
+                    <h5>Görevin Adı</h5>
+                    @Model.Gorev.Ad
+                    <hr />
+                    <h5>Görevin Açıklaması</h5>
+                    @Model.Gorev.Aciklama
+                    <hr />
+                    <h5>Aciliyet Durumu</h5>
+                    @Model.Gorev.Aciliyet.Tanim
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="@Model.Id" />
+                <div class="form-group">
+                    <label asp-for="Tanim"></label>
+                    <input type="text" class="form-control" asp-for="Tanim" placeholder="tanım" maxlength=101>
+                    <span asp-validation-for="Tanim" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Detay"></label>
+                    <textarea type="text" class="form-control" rows="3" asp-for="Detay" placeholder="detay"></textarea>
+                    <span asp-validation-for="Detay" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-success btn-flat float-right">
+                    <i class="fas fa-check-circle"></i>
+                    Kaydet
+                </button>
+                <a asp-area="Member" asp-action="Index" asp-controller="IsEmri" class="btn btn-dark btn-flat">
+                    <i class="fas fa-undo"></i>
+                    Listeye Geri Dön
+                </a>
+            </div>
+        </form>
+    </div>
+</section>

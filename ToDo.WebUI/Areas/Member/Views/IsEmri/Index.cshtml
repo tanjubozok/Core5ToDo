@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Görevler</h1>
+                <h1>Görevlerim</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -54,7 +54,7 @@
                         <strong class="text-danger"><i class="fas fa-map-marker-alt mr-1"></i>Aciliyet Durumu</strong>
                         <p class="text-muted">@item.Aciliyet.Tanim</p>
                         <hr>
-                        <strong><i class="fas fa-file-alt mr-1"></i>Açıklaması</strong>
+                        <strong><i class="fas fa-file-alt mr-1"></i>    </strong>
                         <p class="text-muted">@item.Aciklama</p>
                         <hr>
                         <strong><i class="far fa-folder-open mr-1"></i>Rapor Sayısı</strong>
@@ -70,10 +70,10 @@
                         }
                         else
                         {
-                            <button class="btn btn-primary btn-flat" type="button">
+                            <a asp-area="Member" asp-action="RaporYaz" asp-controller="IsEmri" asp-route-id="@item.Id" class="btn btn-primary btn-flat">
                                 <i class="fas fa-file-signature"></i>
                                 Rapor Yaz
-                            </button>
+                            </a>
                         }
                         <button class="btn btn-success btn-flat">
                             <i class="fas fa-clipboard-check"></i>
@@ -84,6 +84,13 @@
                         <div class="col-md-12">
                             <div class="collapse" id="collapseExample-@index">
                                 <div class="card card-body">
+                                    <p>
+                                        <a asp-area="Member" asp-action="RaporYaz" asp-controller="IsEmri" asp-route-id="@item.Id" class="btn btn-primary btn-flat">
+                                            <i class="fas fa-plus"></i>
+                                            Rapor Ekle
+                                        </a>
+                                    </p>
+
                                     <div class="card-body table-responsive p-0">
                                         <table class="table table-striped table-bordered table-hover table-sm table-head-fixed text-nowrap">
                                             <thead>
@@ -100,7 +107,7 @@
                                                         <td>@itemRapor.Tanim</td>
                                                         <td>@itemRapor.Detay</td>
                                                         <td class="text-center">
-                                                            <a class="btn btn-warning btn-sm btn-flat">
+                                                            <a asp-area="Member" asp-action="RaporDuzenle" asp-controller="IsEmri" asp-route-id="@itemRapor.Id" class="btn btn-warning btn-sm btn-flat">
                                                                 <i class="fas fa-edit"></i>
                                                                 Düzenle
                                                             </a>

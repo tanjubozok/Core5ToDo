@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ToDo.Business.Interfaces;
 using ToDo.Entities.Concrete;
 using ToDo.WebUI.Areas.Admin.Models;
+using ToDo.WebUI.Areas.Member.Models;
 
 namespace ToDo.WebUI.Areas.Member.Controllers
 {
@@ -12,11 +13,13 @@ namespace ToDo.WebUI.Areas.Member.Controllers
     public class IsEmriController : Controller
     {
         private readonly IGorevService _gorevService;
+        private readonly IRaporService _raporService;
         private readonly UserManager<AppUser> _userManager;
 
-        public IsEmriController(IGorevService gorevService, UserManager<AppUser> userManager)
+        public IsEmriController(IGorevService gorevService, UserManager<AppUser> userManager, IRaporService raporService)
         {
             _gorevService = gorevService;
+            _raporService = raporService;
             _userManager = userManager;
         }
 
@@ -43,6 +46,64 @@ namespace ToDo.WebUI.Areas.Member.Controllers
                 listModel.Add(model);
             }
             return View(listModel);
+        }
+
+        public IActionResult RaporYaz(int id)
+        {
+            TempData["Active"] = "isemri";
+
+            var gorev = _gorevService.GetirAciliyetIleId(id);
+            RaporAddViewModel model = new()
+            {
+                GorevId = id,
+                Gorev = gorev
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult RaporYaz(RaporAddViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Rapor rapor = new()
+                {
+                    Detay = model.Detay,
+                    Tanim = model.Tanim,
+                    GorevId = model.GorevId,
+                };
+                _raporService.Kaydet(rapor);
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
+        public IActionResult RaporDuzenle(int id)
+        {
+            var rapor = _raporService.GetirGorevIleId(id);
+            RaporGuncelleViewModel model = new()
+            {
+                Detay = rapor.Detay,
+                Tanim = rapor.Tanim,
+                Gorev = rapor.Gorev,
+                Id = id
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult RaporDuzenle(RaporGuncelleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var rapor = _raporService.GetirGorevIleId(model.Id);
+                rapor.Tanim = model.Tanim;
+                rapor.Detay = model.Detay;
+
+                _raporService.Guncelle(rapor);
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
     }
 }

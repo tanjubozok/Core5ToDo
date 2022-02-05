@@ -4,5 +4,6 @@ namespace ToDo.DataAccess.Interfaces
 {
     public interface IRaporDal : IGenericDal<Rapor>
     {
+        Rapor GetirGorevIleId(int id);
     }
 }

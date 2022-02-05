@@ -14,6 +14,11 @@ namespace ToDo.Business.Concrete
             _raporDal = raporDal;
         }
 
+        public Rapor GetirGorevIleId(int id)
+        {
+            return _raporDal.GetirGorevIleId(id);
+        }
+
         public List<Rapor> GetirHepsi()
         {
             return _raporDal.GetirHepsi();
