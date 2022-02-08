@@ -66,5 +66,20 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
                   .Where(filter)
                   .OrderByDescending(x => x.OlusturmaTarihi).ToList();
         }
+
+        public List<Gorev> GetirTumTablolarlaTamamlanmayan(out int toplamSayfa, int userId, int aktifSayfa = 1)
+        {
+            using TodoContext context = new();
+            var returnValue = context.Gorevler
+                              .Include(x => x.Aciliyet)
+                              .Include(x => x.Raporlar)
+                              .Include(x => x.AppUser)
+                              .Where(x => x.AppUserId == userId && x.Durum)
+                              .OrderByDescending(x => x.OlusturmaTarihi);
+
+            toplamSayfa = (int)Math.Ceiling((double)returnValue.Count() / 3);
+
+            return returnValue.Skip((aktifSayfa - 1) * 3).Take(3).ToList();
+        }
     }
 }

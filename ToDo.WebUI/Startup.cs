@@ -37,6 +37,9 @@ namespace ToDo.WebUI
             services.AddScoped<IAppUserService, AppUserManager>();
             services.AddScoped<IAppUserDal, EfAppUserRepository>();
 
+            services.AddScoped<IBildirimService, BildirimManager>();
+            services.AddScoped<IBildirimDal, EfBildirimRepository>();
+
             services.AddScoped<IDosyaService, DosyaManager>();
 
             services.AddDbContext<TodoContext>();

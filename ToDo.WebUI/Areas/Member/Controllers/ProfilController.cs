@@ -11,8 +11,8 @@ using ToDo.WebUI.Areas.Admin.Models;
 
 namespace ToDo.WebUI.Areas.Member.Controllers
 {
-    [Area("Member")]
     [Authorize(Roles = "Member")]
+    [Area("Member")]
     public class ProfilController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

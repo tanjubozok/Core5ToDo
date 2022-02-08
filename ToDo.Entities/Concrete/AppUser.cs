@@ -11,5 +11,6 @@ namespace ToDo.Entities.Concrete
         public string Picture { get; set; } = "default.png";
 
         public List<Gorev> Gorevler { get; set; }
+        public List<Bildirim> Bildirimler { get; set; }
     }
 }

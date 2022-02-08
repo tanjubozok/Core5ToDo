@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using ToDo.WebUI.Areas.Member.Models;
 
 namespace ToDo.WebUI.Areas.Member.Controllers
 {
+    [Authorize(Roles = "Member")]
     [Area("Member")]
     public class IsEmriController : Controller
     {
