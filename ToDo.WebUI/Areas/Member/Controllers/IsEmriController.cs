@@ -105,5 +105,13 @@ namespace ToDo.WebUI.Areas.Member.Controllers
             }
             return View(model);
         }
+
+        public IActionResult TamamlaGorev(int gorevId)
+        {
+            var gorev = _gorevService.GetirId(gorevId);
+            gorev.Durum = true;
+            _gorevService.Guncelle(gorev);
+            return Json(null);
+        }
     }
 }

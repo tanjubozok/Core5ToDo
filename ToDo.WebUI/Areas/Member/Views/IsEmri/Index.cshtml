@@ -77,10 +77,10 @@
                                 Rapor Yaz
                             </a>
                         }
-                        <button class="btn btn-success btn-flat">
+                        <a class="btn btn-success btn-flat" data-toggle="modal" data-target="#modal-gorev-tamamla" data-gorev-id="@item.Id">
                             <i class="fas fa-clipboard-check"></i>
                             Tamamlandı Olarak İşaretle
-                        </button>
+                        </a>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -128,3 +128,77 @@
         }
     </div>
 </section>
+
+<div class="modal fade" id="modal-gorev-tamamla" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Bilgi</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Görevi tamamlandı olarak işaretlemek istediğinize emin misiniz?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-dark btn-flat" data-dismiss="modal">
+                    <i class="fas fa-undo"></i>
+                    Listeye Geri Dön
+                </button>
+                <button type="button" id="btn-gorev-tamamla" class="btn btn-success btn-flat">
+                    <i class="fas fa-clipboard-check"></i>
+                    Tamamlandı
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JqueryValidation{
+<script src="~/lib/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#modal-gorev-tamamla').on('show.bs.modal', function (event) {
+            var tetikleyenElement = $(event.relatedTarget);
+            var gorevId = tetikleyenElement.data("gorev-id");
+            console.log(gorevId);
+            $("#btn-gorev-tamamla").click(function () {
+                console.log("giriş yapıldı.");
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/json",
+                    url: "/Member/IsEmri/TamamlaGorev",
+                    data: { gorevId: gorevId },
+                    dataType: "Json",
+                    success: function (data) {
+                        window.location.reload();
+                    },
+                    error: function (xhr, exception) {
+                        var msg = "";
+                        if (xhr.status === 0) {
+                            msg = "Not connect.\n Verify Network." + xhr.responseText;
+                        } else if (xhr.status == 404) {
+                            msg = "Requested page not found. [404]" + xhr.responseText;
+                        } else if (xhr.status == 500) {
+                            msg = "Internal Server Error [500]." + xhr.responseText;
+                        } else if (exception === "parsererror") {
+                            msg = "Requested JSON parse failed.";
+                        } else if (exception === "timeout") {
+                            msg = "Time out error." + xhr.responseText;
+                        } else if (exception === "abort") {
+                            msg = "Ajax request aborted.";
+                        } else {
+                            msg = "Error:" + xhr.status + " " + xhr.responseText;
+                        }
+                        alert(msg);
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+}
