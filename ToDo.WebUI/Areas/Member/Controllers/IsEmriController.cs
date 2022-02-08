@@ -70,7 +70,7 @@ namespace ToDo.WebUI.Areas.Member.Controllers
                 {
                     Detay = model.Detay,
                     Tanim = model.Tanim,
-                    GorevId = model.GorevId,
+                    GorevId = model.GorevId
                 };
                 _raporService.Kaydet(rapor);
                 return RedirectToAction("Index");
@@ -83,10 +83,10 @@ namespace ToDo.WebUI.Areas.Member.Controllers
             var rapor = _raporService.GetirGorevIleId(id);
             RaporGuncelleViewModel model = new()
             {
-                Detay = rapor.Detay,
+                Id = id,
                 Tanim = rapor.Tanim,
-                Gorev = rapor.Gorev,
-                Id = id
+                Detay = rapor.Detay,
+                Gorev = rapor.Gorev
             };
             return View(model);
         }

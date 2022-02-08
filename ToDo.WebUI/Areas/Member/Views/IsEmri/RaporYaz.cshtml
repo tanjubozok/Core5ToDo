@@ -26,7 +26,7 @@
                     </li>
                     <li class="breadcrumb-item">
                         <a asp-area="Member" asp-action="Index" asp-controller="IsEmri">
-                            <i class="fas fa-info-circle"></i>
+                            <i class="fas fa-clipboard-list"></i>
                             Görevlerim
                         </a>
                     </li>
@@ -41,19 +41,19 @@
         <form asp-area="Member" asp-action="RaporYaz" asp-controller="IsEmri" method="post">
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="fas fa-info-circle"></i>
+                    <i class="fas fa-clipboard-list"></i>
                     Rapor Yaz
                 </h3>
             </div>
             <div class="card-body">
                 <div class="callout callout-info">
-                    <h5>Görevin Adı</h5>
+                    <strong class="text-danger"><i class="fas fa-clipboard-list mr-1"></i>Görev Adı : </strong>
                     @Model.Gorev.Ad
                     <hr />
-                    <h5>Görevin Açıklaması</h5>
+                    <strong class="text-danger"><i class="fas fa-file-alt mr-1"></i>Görev Açıklama : </strong>
                     @Model.Gorev.Aciklama
                     <hr />
-                    <h5>Aciliyet Durumu</h5>
+                    <strong class="text-danger"><i class="fas fa-map-marker-alt mr-1"></i>Aciliyet Durumu : </strong>
                     @Model.Gorev.Aciliyet.Tanim
                 </div>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>

@@ -51,14 +51,16 @@
                 </div>
                 <div id="collapseOne-@index" class="collapse" data-parent="#accordion" style="">
                     <div class="card-body">
-                        <strong class="text-danger"><i class="fas fa-map-marker-alt mr-1"></i>Aciliyet Durumu</strong>
-                        <p class="text-muted">@item.Aciliyet.Tanim</p>
-                        <hr>
-                        <strong><i class="fas fa-file-alt mr-1"></i>    </strong>
-                        <p class="text-muted">@item.Aciklama</p>
-                        <hr>
-                        <strong><i class="far fa-folder-open mr-1"></i>Rapor Sayısı</strong>
-                        <p class="text-muted">@item.Raporlar.Count</p>
+                        <div class="callout callout-info">
+                            <strong class="text-danger"><i class="fas fa-clipboard-list mr-1"></i>Aciliyet Durumu : </strong>
+                            @item.Aciliyet.Tanim
+                            <hr />
+                            <strong class="text-danger"><i class="fas fa-file-alt mr-1"></i>Görev Açıklama : </strong>
+                            @item.Aciklama
+                            <hr />
+                            <strong class="text-danger"><i class="fas fa-map-marker-alt mr-1"></i>Rapor Sayısı : </strong>
+                            @item.Raporlar.Count
+                        </div>
                     </div>
                     <div class="card-footer">
                         @if (@item.Raporlar.Count > 0)
