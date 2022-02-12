@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ToDo.Business.Interfaces;
 using ToDo.Entities.Concrete;
 using ToDo.WebUI.Areas.Admin.Models;
 
@@ -8,10 +9,11 @@ namespace ToDo.WebUI.ViewComponents
     public class Wrapper : ViewComponent
     {
         private readonly UserManager<AppUser> _userManager;
-
-        public Wrapper(UserManager<AppUser> userManager)
+        private readonly IBildirimService _bildirimService;
+        public Wrapper(UserManager<AppUser> userManager, IBildirimService bildirimService)
         {
             _userManager = userManager;
+            _bildirimService = bildirimService;
         }
 
         public IViewComponentResult Invoke()
@@ -25,6 +27,9 @@ namespace ToDo.WebUI.ViewComponents
                 SurName = user.SurName,
                 Email = user.Email
             };
+
+            var bildirimler = _bildirimService.GetirOkunmayanlar(user.Id).Count;
+            ViewBag.BildirimSayisi = bildirimler;
 
             var roles = _userManager.GetRolesAsync(user).Result;
 

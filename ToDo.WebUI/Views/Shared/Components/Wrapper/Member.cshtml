@@ -51,11 +51,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a asp-area="Member" asp-action="ListeIsEmri" asp-controller="IsEmri" class="nav-link @(active=="a"?"active":"")">
+                    <a asp-area="Member" asp-action="List" asp-controller="Bildirim" class="nav-link @(active=="a"?"active":"")">
                         <i class="nav-icon fas fa-bell"></i>
                         <p>
                             Bildirimler
                         </p>
+                        @if (@ViewBag.BildirimSayisi > 0)
+                        {
+                            <span class="badge badge-info right">
+                                @ViewBag.BildirimSayisi
+                            </span>
+                        }
                     </a>
                 </li>
                 <li class="nav-item">

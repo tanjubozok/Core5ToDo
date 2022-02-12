@@ -16,13 +16,15 @@ namespace ToDo.WebUI.Areas.Member.Controllers
     {
         private readonly IGorevService _gorevService;
         private readonly IRaporService _raporService;
+        private readonly IBildirimService _bildirimService;
         private readonly UserManager<AppUser> _userManager;
 
-        public IsEmriController(IGorevService gorevService, UserManager<AppUser> userManager, IRaporService raporService)
+        public IsEmriController(IGorevService gorevService, UserManager<AppUser> userManager, IRaporService raporService, IBildirimService bildirimService)
         {
             _gorevService = gorevService;
             _raporService = raporService;
             _userManager = userManager;
+            _bildirimService = bildirimService;
         }
 
         public async Task<IActionResult> Index()
@@ -64,7 +66,7 @@ namespace ToDo.WebUI.Areas.Member.Controllers
         }
 
         [HttpPost]
-        public IActionResult RaporYaz(RaporAddViewModel model)
+        public async Task<IActionResult> RaporYaz(RaporAddViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -75,6 +77,18 @@ namespace ToDo.WebUI.Areas.Member.Controllers
                     GorevId = model.GorevId
                 };
                 _raporService.Kaydet(rapor);
+
+                var adminUserList = await _userManager.GetUsersInRoleAsync("Admin");
+                var aktifKullanici = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                foreach (var admin in adminUserList)
+                {
+                    _bildirimService.Kaydet(new Bildirim
+                    {
+                        Aciklama = $"{aktifKullanici.Name} {aktifKullanici.SurName} yeni bir rapor yazdı",
+                        AppUserId = admin.Id
+                    });
+                }
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -108,11 +122,22 @@ namespace ToDo.WebUI.Areas.Member.Controllers
             return View(model);
         }
 
-        public IActionResult TamamlaGorev(int gorevId)
+        public async Task<IActionResult> TamamlaGorev(int gorevId)
         {
             var gorev = _gorevService.GetirId(gorevId);
             gorev.Durum = true;
             _gorevService.Guncelle(gorev);
+            var adminUserList = await _userManager.GetUsersInRoleAsync("Admin");
+            var aktifKullanici = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            foreach (var admin in adminUserList)
+            {
+                _bildirimService.Kaydet(new Bildirim
+                {
+                    Aciklama = $"{aktifKullanici.Name} {aktifKullanici.SurName} vermiş olduğunuz bir görevi tamamladı",
+                    AppUserId = admin.Id
+                });
+            }
             return Json(null);
         }
     }
