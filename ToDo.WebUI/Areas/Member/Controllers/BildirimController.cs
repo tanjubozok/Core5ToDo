@@ -7,10 +7,10 @@ using ToDo.Business.Interfaces;
 using ToDo.Entities.Concrete;
 using ToDo.WebUI.Areas.Admin.Models;
 
-namespace ToDo.WebUI.Areas.Admin.Controllers
+namespace ToDo.WebUI.Areas.Member.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = "Member")]
+    [Area("Member")]
     public class BildirimController : Controller
     {
         private readonly IBildirimService _bildirimService;
@@ -49,13 +49,6 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
             bildirim.Durum = true;
             _bildirimService.Guncelle(bildirim);
 
-            return RedirectToAction("List");
-        }
-
-        public async Task<IActionResult> HepsiniTamamla()
-        {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var bildirimList = _bildirimService.GetirOkunmayanlar(user.Id);
             return RedirectToAction("List");
         }
     }

@@ -9,6 +9,8 @@ namespace ToDo.WebUI.Areas.Member.Controllers
     {
         public IActionResult Index()
         {
+            TempData["Active"] = "home";
+
             return View();
         }
     }

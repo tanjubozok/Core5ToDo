@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Bildirim Listesi";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Member/Views/Shared/_Layout.cshtml";
 }
 
 <section class="content-header">
@@ -60,7 +60,7 @@
                                         <tr>
                                             <td>@item.Aciklama</td>
                                             <td class="text-center">
-                                                <form asp-area="Admin" asp-action="List" asp-controller="Bildirim" method="post">
+                                                <form asp-area="Member" asp-action="List" asp-controller="Bildirim" method="post">
 
                                                     <input type="hidden" name="id" value="@item.Id" />
 

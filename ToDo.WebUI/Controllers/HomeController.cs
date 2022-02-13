@@ -19,7 +19,7 @@ namespace ToDo.WebUI.Controllers
 
         public IActionResult Index()
         {
-            TempData["Active"] = "homepage";
+            TempData["Active"] = "home";
 
             return View();
         }
