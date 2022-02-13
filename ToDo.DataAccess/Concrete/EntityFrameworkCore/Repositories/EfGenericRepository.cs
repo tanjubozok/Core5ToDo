@@ -11,33 +11,33 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
     {
         public List<T> GetirHepsi()
         {
-            using var context = new TodoContext();
+            using TodoContext context = new();
             return context.Set<T>().ToList();
         }
 
         public T GetirId(int id)
         {
-            using var context = new TodoContext();
+            using TodoContext context = new();
             return context.Set<T>().Find(id);
         }
 
         public void Guncelle(T model)
         {
-            using var context = new TodoContext();
+            using TodoContext context = new();
             context.Set<T>().Update(model);
             context.SaveChanges();
         }
 
         public void Kaydet(T model)
         {
-            using var context = new TodoContext();
+            using TodoContext context = new();
             context.Set<T>().Add(model);
             context.SaveChanges();
         }
 
         public void Sil(T model)
         {
-            using var context = new TodoContext();
+            using TodoContext context = new();
             context.Set<T>().Remove(model);
             context.SaveChanges();
         }

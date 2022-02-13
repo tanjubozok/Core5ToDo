@@ -29,6 +29,11 @@ namespace ToDo.Business.Concrete
             return _bildirimDal.GetirOkunmayanlar(appUserId);
         }
 
+        public int GetirOkunmayanSayisiileAppUserId(int id)
+        {
+            return _bildirimDal.GetirOkunmayanSayisiileAppUserId(id);
+        }
+
         public void Guncelle(Bildirim model)
         {
             _bildirimDal.Guncelle(model);

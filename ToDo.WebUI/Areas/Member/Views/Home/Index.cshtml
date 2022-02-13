@@ -1,7 +1,122 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Görevler";
+    Layout = "~/Areas/Member/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <i class="fas fa-home"></i>
+                        Anasayfa
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        @if (ViewBag.TamamlananGorevSayisi > 0)
+                        {
+                            <h3>@ViewBag.TamamlananGorevSayisi</h3>
+                        }
+                        else
+                        {
+                            <h3>0</h3>
+                        }
+                        <p>Tamamladığınız Görev Sayısı</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <a asp-action="Index" asp-controller="Gorev" asp-area="Member" class="small-box-footer">
+                        Daha fazla
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
 
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        @if (ViewBag.TamamlanmasiGerekenGorevSayisi > 0)
+                        {
+                            <h3>@ViewBag.TamamlanmasiGerekenGorevSayisi</h3>
+                        }
+                        else
+                        {
+                            <h3>0</h3>
+                        }
+                        <p>Tamamlamanız Gereken Görev Sayısı</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-list-ol"></i>
+                    </div>
+                    <a asp-action="Index" asp-controller="IsEmri" asp-area="Member" class="small-box-footer">
+                        Daha fazla
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        @if (ViewBag.OkunmamisBildirimSayisi > 0)
+                        {
+                            <h3>@ViewBag.OkunmamisBildirimSayisi</h3>
+                        }
+                        else
+                        {
+                            <h3>0</h3>
+                        }
+                        <p>Okumadığınız Bildirimler</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <a asp-action="List" asp-controller="Bildirim" asp-area="Member" class="small-box-footer">
+                        Daha fazla
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        @if (ViewBag.RaporSayisi > 0)
+                        {
+                            <h3>@ViewBag.RaporSayisi</h3>
+                        }
+                        else
+                        {
+                            <h3>0</h3>
+                        }
+                        <p>
+                            Yazdığınız Rapor Sayısı
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <a asp-action="Index" asp-controller="IsEmri" asp-area="Member" class="small-box-footer">
+                        Daha fazla
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

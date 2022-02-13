@@ -25,7 +25,8 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
             return context.Gorevler
                   .Include(x => x.Aciliyet)
                   .Where(x => x.Durum == false)
-                  .OrderByDescending(x => x.OlusturmaTarihi).ToList();
+                  .OrderByDescending(x => x.OlusturmaTarihi)
+                  .ToList();
         }
 
         public Gorev GetirRaporlarIleId(int id)
@@ -53,7 +54,8 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
                   .Include(x => x.Raporlar)
                   .Include(x => x.AppUser)
                   .Where(x => x.Durum == false)
-                  .OrderByDescending(x => x.OlusturmaTarihi).ToList();
+                  .OrderByDescending(x => x.OlusturmaTarihi)
+                  .ToList();
         }
 
         public List<Gorev> GetirTumTablolarla(Expression<Func<Gorev, bool>> filter)
@@ -64,7 +66,8 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
                   .Include(x => x.Raporlar)
                   .Include(x => x.AppUser)
                   .Where(filter)
-                  .OrderByDescending(x => x.OlusturmaTarihi).ToList();
+                  .OrderByDescending(x => x.OlusturmaTarihi)
+                  .ToList();
         }
 
         public List<Gorev> GetirTumTablolarlaTamamlanmayan(out int toplamSayfa, int userId, int aktifSayfa = 1)
@@ -77,9 +80,28 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
                               .Where(x => x.AppUserId == userId && x.Durum)
                               .OrderByDescending(x => x.OlusturmaTarihi);
 
-            toplamSayfa = (int)Math.Ceiling((double)returnValue.Count() / 3);
+            toplamSayfa = (int)Math
+                .Ceiling((double)returnValue
+                .Count() / 3);
 
-            return returnValue.Skip((aktifSayfa - 1) * 3).Take(3).ToList();
+            return returnValue
+                .Skip((aktifSayfa - 1) * 3)
+                .Take(3)
+                .ToList();
+        }
+
+        public int GetirGorevSayisiTamamlananileAppUserId(int id)
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                .Count(I => I.AppUserId == id && I.Durum);
+        }
+
+        public int GetirGorevSayisiTamamlanmasiGerekenileAppUserId(int id)
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                .Count(I => I.AppUserId == id && !I.Durum);
         }
     }
 }
