@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ToDo.DataAccess.Concrete.EntityFrameworkCore.Contexts;
@@ -69,6 +70,38 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
 
             return result
                 .ToList();
+        }
+
+        public List<DualHelper> GetirEnCokGorevTamamlamisPersoneller()
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                .Include(I => I.AppUser)
+                .Where(I => I.Durum)
+                .GroupBy(I => I.AppUser.UserName)
+                .OrderByDescending(I => I.Count())
+                .Take(5)
+                .Select(I => new DualHelper
+                {
+                    Isim = I.Key,
+                    GorevSayisi = I.Count()
+                }).ToList();
+        }
+
+        public List<DualHelper> GetirEnCokGorevdeCalisanPersoneller()
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                .Include(I => I.AppUser)
+                .Where(I => !I.Durum && I.AppUserId != null)
+                .GroupBy(I => I.AppUser.UserName)
+                .OrderByDescending(I => I.Count())
+                .Take(5)
+                .Select(I => new DualHelper
+                {
+                    Isim = I.Key,
+                    GorevSayisi = I.Count()
+                }).ToList();
         }
     }
 }

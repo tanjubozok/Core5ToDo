@@ -23,5 +23,15 @@ namespace ToDo.Business.Concrete
         {
             return _userDal.GetirAdminOlmayanlar(out toplamSayfa, arabacakKelime, aktifSayfa);
         }
+
+        public List<DualHelper> GetirEnCokGorevdeCalisanPersoneller()
+        {
+            return _userDal.GetirEnCokGorevdeCalisanPersoneller();
+        }
+
+        public List<DualHelper> GetirEnCokGorevTamamlamisPersoneller()
+        {
+            return _userDal.GetirEnCokGorevTamamlamisPersoneller();
+        }
     }
 }
