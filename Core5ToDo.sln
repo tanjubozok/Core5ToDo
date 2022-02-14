@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Entities", "ToDo.Entit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.WebUI", "ToDo.WebUI\ToDo.WebUI.csproj", "{35DBA2CD-BD35-47C6-A302-0DE48429FC33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.DTO", "ToDo.DTO\ToDo.DTO.csproj", "{02E61B00-4CE5-48C4-80FC-3F1D77D5BF1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{35DBA2CD-BD35-47C6-A302-0DE48429FC33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35DBA2CD-BD35-47C6-A302-0DE48429FC33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35DBA2CD-BD35-47C6-A302-0DE48429FC33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02E61B00-4CE5-48C4-80FC-3F1D77D5BF1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02E61B00-4CE5-48C4-80FC-3F1D77D5BF1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02E61B00-4CE5-48C4-80FC-3F1D77D5BF1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02E61B00-4CE5-48C4-80FC-3F1D77D5BF1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
