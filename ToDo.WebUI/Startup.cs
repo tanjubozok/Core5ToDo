@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,9 +9,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ToDo.Business.Concrete;
 using ToDo.Business.Interfaces;
+using ToDo.Business.ValidationRules.FluentValidation;
 using ToDo.DataAccess.Concrete.EntityFrameworkCore.Contexts;
 using ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories;
 using ToDo.DataAccess.Interfaces;
+using ToDo.DTO.DTOs.AciliyetDtos;
+using ToDo.DTO.DTOs.AppUserDtos;
+using ToDo.DTO.DTOs.GorevDtos;
+using ToDo.DTO.DTOs.RaporDtos;
 using ToDo.Entities.Concrete;
 
 namespace ToDo.WebUI
@@ -66,7 +73,17 @@ namespace ToDo.WebUI
                 option.AccessDeniedPath = "/Home/AccessDenied";
             });
 
-            services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddTransient<IValidator<AciliyetAddDto>, AciliyetAddValidator>();
+            services.AddTransient<IValidator<AciliyetUpdateDto>, AciliyetUpdateValidator>();
+            services.AddTransient<IValidator<AppUserAddDto>, AppUserAddValidator>();
+            services.AddTransient<IValidator<AppUserSignInDto>, AppUserSignInValidator>();
+            services.AddTransient<IValidator<GorevAddDto>, GorevAddValidator>();
+            services.AddTransient<IValidator<GorevUpdateDto>, GorevUpdateValidator>();
+            services.AddTransient<IValidator<RaporAddDto>, RaporAddValidator>();
+            services.AddTransient<IValidator<RaporUpdateDto>, RaporUpdateValidator>();
+
+            services.AddControllersWithViews().AddFluentValidation();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
