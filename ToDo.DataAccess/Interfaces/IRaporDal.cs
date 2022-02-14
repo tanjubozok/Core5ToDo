@@ -6,5 +6,6 @@ namespace ToDo.DataAccess.Interfaces
     {
         Rapor GetirGorevIleId(int id);
         int GetirRaporSayisiileAppUserId(int id);
+        int GetirRaporSayisi();
     }
 }

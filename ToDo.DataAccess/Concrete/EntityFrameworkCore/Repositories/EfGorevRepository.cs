@@ -103,5 +103,19 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
             return context.Gorevler
                 .Count(I => I.AppUserId == id && !I.Durum);
         }
+
+        public int GetirGorevSayisiAtanmayiBekleyen()
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                .Count(I => I.AppUserId == null && !I.Durum);
+        }
+
+        public int GetirGorevTamamlanmis()
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                .Count(I => I.Durum);
+        }
     }
 }

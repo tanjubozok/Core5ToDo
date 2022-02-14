@@ -26,7 +26,7 @@ namespace ToDo.WebUI.Areas.Member.Controllers
 
         public async Task<IActionResult> Index()
         {
-            TempData["Active"] = "home";
+            TempData["Active"] = "anasayfa";
 
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             ViewBag.RaporSayisi = _raporService.GetirRaporSayisiileAppUserId(user.Id);

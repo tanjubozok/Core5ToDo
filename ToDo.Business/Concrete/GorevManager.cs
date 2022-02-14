@@ -31,6 +31,11 @@ namespace ToDo.Business.Concrete
             return _gorevDal.GetirAppUserId(appUserId);
         }
 
+        public int GetirGorevSayisiAtanmayiBekleyen()
+        {
+            return _gorevDal.GetirGorevSayisiAtanmayiBekleyen();
+        }
+
         public int GetirGorevSayisiTamamlananileAppUserId(int id)
         {
             return _gorevDal.GetirGorevSayisiTamamlananileAppUserId(id);
@@ -39,6 +44,11 @@ namespace ToDo.Business.Concrete
         public int GetirGorevSayisiTamamlanmasiGerekenileAppUserId(int id)
         {
             return _gorevDal.GetirGorevSayisiTamamlanmasiGerekenileAppUserId(id);
+        }
+
+        public int GetirGorevTamamlanmis()
+        {
+            return _gorevDal.GetirGorevTamamlanmis();
         }
 
         public List<Gorev> GetirHepsi()

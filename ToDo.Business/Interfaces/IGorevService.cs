@@ -16,5 +16,7 @@ namespace ToDo.Business.Interfaces
         Gorev GetirRaporlarIleId(int id);
         int GetirGorevSayisiTamamlananileAppUserId(int id);
         int GetirGorevSayisiTamamlanmasiGerekenileAppUserId(int id);
+        int GetirGorevSayisiAtanmayiBekleyen();
+        int GetirGorevTamamlanmis();
     }
 }

@@ -17,6 +17,13 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
                 .FirstOrDefault(x => x.Id == id);
         }
 
+        public int GetirRaporSayisi()
+        {
+            using TodoContext context = new();
+            return context.Raporlar
+                .Count();
+        }
+
         public int GetirRaporSayisiileAppUserId(int id)
         {
             using TodoContext context = new();

@@ -29,6 +29,11 @@ namespace ToDo.Business.Concrete
             return _raporDal.GetirId(id);
         }
 
+        public int GetirRaporSayisi()
+        {
+            return _raporDal.GetirRaporSayisi();
+        }
+
         public int GetirRaporSayisiileAppUserId(int id)
         {
             return _raporDal.GetirRaporSayisiileAppUserId(id);
