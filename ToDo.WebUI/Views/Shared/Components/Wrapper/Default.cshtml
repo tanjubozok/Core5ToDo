@@ -10,7 +10,7 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a asp-action="Index" asp-controller="Admin" class="brand-link">
-        <img src="~/theme/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="~/theme/img/AdminLTELogo.png" alt="logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">TR1907</span>
     </a>
     <div class="sidebar">
@@ -34,6 +34,14 @@
         </div>
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <a asp-area="Admin" asp-action="Index" asp-controller="Home" class="nav-link @(active=="anasayfa"?"active":"")">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Anasayfa
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a asp-area="Admin" asp-action="ListeGorev" asp-controller="Gorev" class="nav-link @(active=="gorev"?"active":"")">
                         <i class="nav-icon fas fa-clipboard-list"></i>
@@ -59,18 +67,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a asp-area="Admin" asp-action="ListeIsEmri" asp-controller="IsEmri" class="nav-link @(active=="a"?"active":"")">
+                    <a asp-area="Admin" asp-action="Index" asp-controller="Chart" class="nav-link @(active=="chart"?"active":"")">
                         <i class="nav-icon fas fa-chart-pie"></i>
                         <p>
                             Grafikler
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a asp-area="Admin" asp-action="ListeIsEmri" asp-controller="IsEmri" class="nav-link @(active=="a"?"active":"")">
-                        <i class="nav-icon fas fa-chart-area"></i>
-                        <p>
-                            İstatistikler
                         </p>
                     </a>
                 </li>

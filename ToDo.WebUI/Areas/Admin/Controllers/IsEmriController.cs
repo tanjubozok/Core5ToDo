@@ -18,13 +18,15 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         private readonly IGorevService _gorevService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IDosyaService _dosyaService;
+        private readonly IBildirimService _bildirimService;
 
-        public IsEmriController(IAppUserService userService, IGorevService gorevService, UserManager<AppUser> userManager, IDosyaService dosyaService)
+        public IsEmriController(IAppUserService userService, IGorevService gorevService, UserManager<AppUser> userManager, IDosyaService dosyaService, IBildirimService bildirimService)
         {
             _userService = userService;
             _gorevService = gorevService;
             _userManager = userManager;
             _dosyaService = dosyaService;
+            _bildirimService = bildirimService;
         }
 
         public IActionResult ListeIsEmri()
@@ -96,6 +98,12 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
             var gorev = _gorevService.GetirId(model.GorevId);
             gorev.AppUserId = model.PersonelId;
             _gorevService.Guncelle(gorev);
+
+            _bildirimService.Kaydet(new Bildirim
+            {
+                AppUserId = model.PersonelId,
+                Aciklama = $"{gorev.Ad} adlı iş için görevlendirildiniz."
+            });
             return RedirectToAction("ListeIsEmri");
         }
 

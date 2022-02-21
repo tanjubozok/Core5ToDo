@@ -10,7 +10,7 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
     {
         public Rapor GetirGorevIleId(int id)
         {
-            using TodoContext context = new();
+            using var context = new TodoContext();
             return context.Raporlar.Include(x => x.Gorev).ThenInclude(x => x.Aciliyet).FirstOrDefault(x => x.Id == id);
         }
 
