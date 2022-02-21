@@ -8,7 +8,7 @@ using ToDo.Entities.Concrete;
 
 namespace ToDo.WebUI.Mapping.AutoMapperProfile
 {
-    public class MapProfile:Profile
+    public class MapProfile : Profile
     {
         public MapProfile()
         {

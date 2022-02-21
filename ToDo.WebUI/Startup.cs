@@ -74,6 +74,7 @@ namespace ToDo.WebUI
             });
 
             services.AddAutoMapper(typeof(Startup));
+
             services.AddTransient<IValidator<AciliyetAddDto>, AciliyetAddValidator>();
             services.AddTransient<IValidator<AciliyetUpdateDto>, AciliyetUpdateValidator>();
             services.AddTransient<IValidator<AppUserAddDto>, AppUserAddValidator>();

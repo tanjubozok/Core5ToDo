@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDo.Business.Interfaces;
+using ToDo.DTO.DTOs.AciliyetDtos;
 using ToDo.Entities.Concrete;
-using ToDo.WebUI.Areas.Admin.Models;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
 {
@@ -12,29 +13,18 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
     public class AciliyetController : Controller
     {
         private readonly IAciliyetService _aciliyetService;
+        private readonly IMapper _mapper;
 
-        public AciliyetController(IAciliyetService aciliyetService)
+        public AciliyetController(IAciliyetService aciliyetService, IMapper mapper)
         {
             _aciliyetService = aciliyetService;
+            _mapper = mapper;
         }
 
         public IActionResult ListeAciliyet()
         {
             TempData["Active"] = "aciliyet";
-
-            var aciliyetler = _aciliyetService.GetirHepsi();
-            var model = new List<AciliyetListViewModel>();
-
-            foreach (var item in aciliyetler)
-            {
-                var aciliyetModel = new AciliyetListViewModel()
-                {
-                    Id = item.Id,
-                    Tanim = item.Tanim
-                };
-                model.Add(aciliyetModel);
-            }
-            return View(model);
+            return View(_mapper.Map<List<AciliyetListDto>>(_aciliyetService.GetirHepsi()));
         }
 
         public IActionResult EkleAciliyet()
@@ -45,7 +35,7 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult EkleAciliyet(AciliyetEkleViewModel model)
+        public IActionResult EkleAciliyet(AciliyetAddDto model)
         {
             if (ModelState.IsValid)
             {
@@ -63,18 +53,11 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         public IActionResult GuncelleAciliyet(int id)
         {
             TempData["Active"] = "aciliyet";
-
-            var aciliyet = _aciliyetService.GetirId(id);
-            var model = new AciliyetGuncelleViewModel
-            {
-                Id = id,
-                Tanim = aciliyet.Tanim
-            };
-            return View(model);
+            return View(_mapper.Map<AciliyetUpdateDto>(_aciliyetService.GetirId(id)));
         }
 
         [HttpPost]
-        public IActionResult GuncelleAciliyet(AciliyetGuncelleViewModel model)
+        public IActionResult GuncelleAciliyet(AciliyetUpdateDto model)
         {
             if (ModelState.IsValid)
             {
