@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using ToDo.Business.Interfaces;
+using ToDo.Entities.Concrete;
 
 namespace ToDo.WebUI.Areas.Member.Controllers
 {

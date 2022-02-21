@@ -15,5 +15,12 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
                 .Where(x => x.AppUserId == appUserId && !x.Durum)
                 .ToList();
         }
+
+        public int GetirOkunmayanSayisiileAppUserId(int AppUserId)
+        {
+            using TodoContext context = new();
+            return context.Bildirimler
+                .Count(I => I.AppUserId == AppUserId && !I.Durum);
+        }
     }
 }
