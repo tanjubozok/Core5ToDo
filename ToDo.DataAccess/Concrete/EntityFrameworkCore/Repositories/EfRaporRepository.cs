@@ -10,8 +10,24 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
     {
         public Rapor GetirGorevIleId(int id)
         {
-            using var context = new TodoContext();
+            using TodoContext context = new();
             return context.Raporlar.Include(x => x.Gorev).ThenInclude(x => x.Aciliyet).FirstOrDefault(x => x.Id == id);
+        }
+
+        public int GetirRaporSayisi()
+        {
+            using TodoContext context = new();
+            return context.Raporlar.Count();
+        }
+
+        public int GetirRaporSayisiileAppUserId(int id)
+        {
+            using TodoContext context = new();
+            var result = context.Gorevler
+                .Include(I => I.Raporlar)
+                .Where(I => I.AppUserId == id);
+
+            return result.SelectMany(I => I.Raporlar).Count();
         }
     }
 }

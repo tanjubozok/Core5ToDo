@@ -81,5 +81,19 @@ namespace ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
 
             return returnValue.Skip((aktifSayfa - 1) * 3).Take(3).ToList();
         }
+
+        public int GetirGorevSayisiTamamlananileAppUserId(int id)
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                .Count(I => I.AppUserId == id && I.Durum);
+        }
+
+        public int GetirGorevSayisiTamamlanmasiGerekenileAppUserId(int id)
+        {
+            using TodoContext context = new();
+            return context.Gorevler
+                .Count(I => I.AppUserId == id && !I.Durum);
+        }
     }
 }
