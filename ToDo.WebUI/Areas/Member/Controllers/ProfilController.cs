@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using ToDo.DTO.DTOs.AppUserDtos;
 using ToDo.Entities.Concrete;
 using ToDo.WebUI.Areas.Admin.Models;
 
@@ -16,26 +18,19 @@ namespace ToDo.WebUI.Areas.Member.Controllers
     public class ProfilController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public ProfilController(UserManager<AppUser> userManager)
+        public ProfilController(UserManager<AppUser> userManager, IMapper mapper)
         {
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "profil";
-
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            AppUserListViewModel model = new()
-            {
-                Id = user.Id,
-                Name = user.Name,
-                SurName = user.SurName,
-                Email = user.Email,
-                Picture = user.Picture
-            };
-            return View(model);
+            return View(_mapper.Map<AppUserListDto>(user));
         }
 
         [HttpPost]

@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ToDo.Business.Interfaces;
+using ToDo.DTO.DTOs.GorevDtos;
+using ToDo.DTO.DTOs.RaporDtos;
 using ToDo.Entities.Concrete;
-using ToDo.WebUI.Areas.Admin.Models;
-using ToDo.WebUI.Areas.Member.Models;
 
 namespace ToDo.WebUI.Areas.Member.Controllers
 {
@@ -18,38 +19,22 @@ namespace ToDo.WebUI.Areas.Member.Controllers
         private readonly IRaporService _raporService;
         private readonly IBildirimService _bildirimService;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public IsEmriController(IGorevService gorevService, UserManager<AppUser> userManager, IRaporService raporService, IBildirimService bildirimService)
+        public IsEmriController(IGorevService gorevService, UserManager<AppUser> userManager, IRaporService raporService, IBildirimService bildirimService, IMapper mapper)
         {
             _gorevService = gorevService;
             _raporService = raporService;
             _userManager = userManager;
             _bildirimService = bildirimService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "isemri";
-
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var gorevler = _gorevService.GetirTumTablolarla(x => x.AppUserId == user.Id && !x.Durum);
-            List<GorevListAllViewModel> listModel = new();
-
-            foreach (var item in gorevler)
-            {
-                GorevListAllViewModel model = new()
-                {
-                    Id = item.Id,
-                    Aciklama = item.Aciklama,
-                    Aciliyet = item.Aciliyet,
-                    Ad = item.Ad,
-                    AppUser = item.AppUser,
-                    OluşturmaTarihi = item.OlusturmaTarihi,
-                    Raporlar = item.Raporlar
-                };
-                listModel.Add(model);
-            }
-            return View(listModel);
+            return View(_mapper.Map<List<GorevListAllDto>>(_gorevService.GetirTumTablolarla(I => I.AppUserId == user.Id && !I.Durum)));
         }
 
         public IActionResult RaporYaz(int id)
@@ -57,7 +42,7 @@ namespace ToDo.WebUI.Areas.Member.Controllers
             TempData["Active"] = "isemri";
 
             var gorev = _gorevService.GetirAciliyetIleId(id);
-            RaporAddViewModel model = new()
+            RaporAddDto model = new()
             {
                 GorevId = id,
                 Gorev = gorev
@@ -66,7 +51,7 @@ namespace ToDo.WebUI.Areas.Member.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RaporYaz(RaporAddViewModel model)
+        public async Task<IActionResult> RaporYaz(RaporAddDto model)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +82,7 @@ namespace ToDo.WebUI.Areas.Member.Controllers
         public IActionResult RaporDuzenle(int id)
         {
             var rapor = _raporService.GetirGorevIleId(id);
-            RaporGuncelleViewModel model = new()
+            RaporUpdateDto model = new()
             {
                 Id = id,
                 Tanim = rapor.Tanim,
@@ -108,7 +93,7 @@ namespace ToDo.WebUI.Areas.Member.Controllers
         }
 
         [HttpPost]
-        public IActionResult RaporDuzenle(RaporGuncelleViewModel model)
+        public IActionResult RaporDuzenle(RaporUpdateDto model)
         {
             if (ModelState.IsValid)
             {
