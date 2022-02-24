@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ToDo.Entities.Concrete;
-using ToDo.WebUI.Models;
 
 namespace ToDo.WebUI.Controllers
 {

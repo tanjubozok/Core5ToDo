@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ToDo.Business.Interfaces;
 using ToDo.Entities.Concrete;
-using ToDo.WebUI.Areas.Admin.Models;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
 {
@@ -19,7 +18,7 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IDosyaService _dosyaService;
         private readonly IBildirimService _bildirimService;
-
+        private readonly IMapper
         public IsEmriController(IAppUserService userService, IGorevService gorevService, UserManager<AppUser> userManager, IDosyaService dosyaService, IBildirimService bildirimService)
         {
             _userService = userService;

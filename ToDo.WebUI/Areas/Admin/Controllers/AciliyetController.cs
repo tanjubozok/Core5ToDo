@@ -30,7 +30,6 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         public IActionResult EkleAciliyet()
         {
             TempData["Active"] = "aciliyet";
-
             return View();
         }
 
@@ -44,7 +43,6 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
                     Tanim = model.Tanim
                 };
                 _aciliyetService.Kaydet(aciliyet);
-
                 return RedirectToAction("ListeAciliyet");
             }
             return View(model);

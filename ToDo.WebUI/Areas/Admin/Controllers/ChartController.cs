@@ -18,7 +18,6 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         public IActionResult Index()
         {
             TempData["Active"] = "chart";
-
             return View();
         }
 

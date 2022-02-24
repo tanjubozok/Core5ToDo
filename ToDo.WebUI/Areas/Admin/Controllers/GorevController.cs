@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using ToDo.Business.Interfaces;
+using ToDo.DTO.DTOs.GorevDtos;
 using ToDo.Entities.Concrete;
-using ToDo.WebUI.Areas.Admin.Models;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
 {
@@ -14,34 +15,19 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
     {
         private readonly IGorevService _gorevService;
         private readonly IAciliyetService _aciliyetService;
+        private readonly IMapper _mapper;
 
-        public GorevController(IGorevService gorevService, IAciliyetService aciliyetService)
+        public GorevController(IGorevService gorevService, IAciliyetService aciliyetService, IMapper mapper)
         {
             _gorevService = gorevService;
             _aciliyetService = aciliyetService;
+            _mapper = mapper;
         }
 
         public IActionResult ListeGorev()
         {
             TempData["Active"] = "gorev";
-
-            var gorevler = _gorevService.GetirAciliyetIleTamamlanmayanlari();
-            List<GorevListViewModel> listModel = new();
-            foreach (var item in gorevler)
-            {
-                GorevListViewModel model = new()
-                {
-                    Aciklama = item.Aciklama,
-                    Aciliyet = item.Aciliyet,
-                    AciliyetId = item.AciliyetId,
-                    Ad = item.Ad,
-                    Durum = item.Durum,
-                    Id = item.Id,
-                    OlusturmaTarihi = item.OlusturmaTarihi
-                };
-                listModel.Add(model);
-            }
-            return View(listModel);
+            return View(_mapper.Map<List<GorevListDto>>(_gorevService.GetirAciliyetIleTamamlanmayanlari()));
         }
 
         public IActionResult EkleGorev()
@@ -53,7 +39,7 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult EkleGorev(GorevEkleViewModel model)
+        public IActionResult EkleGorev(GorevAddDto model)
         {
             if (ModelState.IsValid)
             {
@@ -72,21 +58,13 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         public IActionResult GuncelleGorev(int id)
         {
             TempData["Active"] = "gorev";
-
-            var gorev = _gorevService.GetirId(id);
-            var model = new GorevGuncelleViewModel
-            {
-                Id = id,
-                Ad = gorev.Ad,
-                Aciklama = gorev.Aciklama,
-                AciliyetId = gorev.AciliyetId
-            };
+            var gorev = _gorevService.GetirId(id);           
             ViewBag.Aciliyetler = new SelectList(_aciliyetService.GetirHepsi(), "Id", "Tanim", gorev.AciliyetId);
-            return View(model);
+            return View(_mapper.Map<GorevUpdateDto>(gorev));
         }
 
         [HttpPost]
-        public IActionResult GuncelleGorev(GorevGuncelleViewModel model)
+        public IActionResult GuncelleGorev(GorevUpdateDto model)
         {
             if (ModelState.IsValid)
             {

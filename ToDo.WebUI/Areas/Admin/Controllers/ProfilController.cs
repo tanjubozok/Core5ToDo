@@ -7,7 +7,6 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using ToDo.Entities.Concrete;
-using ToDo.WebUI.Areas.Admin.Models;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
 {

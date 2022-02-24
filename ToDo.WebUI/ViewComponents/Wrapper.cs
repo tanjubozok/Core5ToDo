@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ToDo.Business.Interfaces;
 using ToDo.Entities.Concrete;
-using ToDo.WebUI.Areas.Admin.Models;
 
 namespace ToDo.WebUI.ViewComponents
 {

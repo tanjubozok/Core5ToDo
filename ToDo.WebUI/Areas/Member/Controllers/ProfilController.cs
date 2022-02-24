@@ -9,7 +9,6 @@ using System.IO;
 using System.Threading.Tasks;
 using ToDo.DTO.DTOs.AppUserDtos;
 using ToDo.Entities.Concrete;
-using ToDo.WebUI.Areas.Admin.Models;
 
 namespace ToDo.WebUI.Areas.Member.Controllers
 {
