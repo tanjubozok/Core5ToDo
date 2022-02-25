@@ -56,7 +56,7 @@ namespace ToDo.WebUI.Controllers
                         }
                     }
                 }
-                ModelState.AddModelError("", "Kullanıcı adı ve ya Şifre hatalıdır");
+                ModelState.AddModelError("", "Kullanıcı Adı veya Şifre hatalıdır");
             }
             return View(model);
         }

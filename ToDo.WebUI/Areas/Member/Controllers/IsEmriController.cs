@@ -8,39 +8,38 @@ using ToDo.Business.Interfaces;
 using ToDo.DTO.DTOs.GorevDtos;
 using ToDo.DTO.DTOs.RaporDtos;
 using ToDo.Entities.Concrete;
+using ToDo.WebUI.BaseControllers;
+using ToDo.WebUI.StringInfo;
 
 namespace ToDo.WebUI.Areas.Member.Controllers
 {
-    [Authorize(Roles = "Member")]
-    [Area("Member")]
-    public class IsEmriController : Controller
+    [Authorize(Roles = RoleInfo.Member)]
+    [Area(AreaInfo.Member)]
+    public class IsEmriController : BaseIdentityController
     {
         private readonly IGorevService _gorevService;
         private readonly IRaporService _raporService;
         private readonly IBildirimService _bildirimService;
-        private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
-        public IsEmriController(IGorevService gorevService, UserManager<AppUser> userManager, IRaporService raporService, IBildirimService bildirimService, IMapper mapper)
+        public IsEmriController(IGorevService gorevService, UserManager<AppUser> userManager, IRaporService raporService, IBildirimService bildirimService, IMapper mapper) : base(userManager)
         {
             _gorevService = gorevService;
             _raporService = raporService;
-            _userManager = userManager;
             _bildirimService = bildirimService;
             _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            TempData["Active"] = "isemri";
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            TempData["Active"] = TempdataInfo.IsEmri;
+            var user = await GirisYapanKullanici();
             return View(_mapper.Map<List<GorevListAllDto>>(_gorevService.GetirTumTablolarla(I => I.AppUserId == user.Id && !I.Durum)));
         }
 
         public IActionResult RaporYaz(int id)
         {
-            TempData["Active"] = "isemri";
-
+            TempData["Active"] = TempdataInfo.IsEmri;
             var gorev = _gorevService.GetirAciliyetIleId(id);
             RaporAddDto model = new()
             {
@@ -64,7 +63,7 @@ namespace ToDo.WebUI.Areas.Member.Controllers
                 _raporService.Kaydet(rapor);
 
                 var adminUserList = await _userManager.GetUsersInRoleAsync("Admin");
-                var aktifKullanici = await _userManager.FindByNameAsync(User.Identity.Name);
+                var aktifKullanici = await GirisYapanKullanici();
 
                 foreach (var admin in adminUserList)
                 {
@@ -113,7 +112,7 @@ namespace ToDo.WebUI.Areas.Member.Controllers
             gorev.Durum = true;
             _gorevService.Guncelle(gorev);
             var adminUserList = await _userManager.GetUsersInRoleAsync("Admin");
-            var aktifKullanici = await _userManager.FindByNameAsync(User.Identity.Name);
+            var aktifKullanici = await GirisYapanKullanici();
 
             foreach (var admin in adminUserList)
             {

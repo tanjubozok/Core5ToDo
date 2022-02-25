@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using ToDo.Business.Interfaces;
 using ToDo.DTO.DTOs.AciliyetDtos;
 using ToDo.Entities.Concrete;
+using ToDo.WebUI.StringInfo;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
     public class AciliyetController : Controller
     {
         private readonly IAciliyetService _aciliyetService;
@@ -23,13 +24,13 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
 
         public IActionResult ListeAciliyet()
         {
-            TempData["Active"] = "aciliyet";
+            TempData["Active"] = TempdataInfo.Aciliyet;
             return View(_mapper.Map<List<AciliyetListDto>>(_aciliyetService.GetirHepsi()));
         }
 
         public IActionResult EkleAciliyet()
         {
-            TempData["Active"] = "aciliyet";
+            TempData["Active"] = TempdataInfo.Aciliyet;
             return View();
         }
 
@@ -50,7 +51,7 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
 
         public IActionResult GuncelleAciliyet(int id)
         {
-            TempData["Active"] = "aciliyet";
+            TempData["Active"] = TempdataInfo.Aciliyet;
             return View(_mapper.Map<AciliyetUpdateDto>(_aciliyetService.GetirId(id)));
         }
 

@@ -3,34 +3,31 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using ToDo.DTO.DTOs.AppUserDtos;
 using ToDo.Entities.Concrete;
 using ToDo.WebUI.BaseControllers;
+using ToDo.WebUI.StringInfo;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")]
-    public class ProfilController : Controller
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
+    public class ProfilController : BaseIdentityController
     {
-        private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
-        public ProfilController(UserManager<AppUser> userManager, IMapper mapper)
+        public ProfilController(UserManager<AppUser> userManager, IMapper mapper) : base(userManager)
         {
-            _userManager = userManager;
             _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            TempData["Active"] = "profil";
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            return View(_mapper.Map<AppUserListDto>(user));
+            TempData["Active"] = TempdataInfo.Profil;
+            return View(_mapper.Map<AppUserListDto>(await GirisYapanKullanici()));
         }
 
         [HttpPost]
@@ -38,7 +35,7 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == model.Id);
+                var user = await GirisYapanKullanici();
                 if (Resim != null)
                 {
                     string uzanti = Path.GetExtension(Resim.FileName);
@@ -58,10 +55,7 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
                     TempData["message"] = "Güncelleme işleminiz başarılı bir şekilde tamamlandı";
                     return RedirectToAction("Index");
                 }
-                foreach (var item in result.Errors)
-                {
-                    ModelState.AddModelError("", item.Description);
-                }
+                HataEkle(result.Errors);
             }
             return View(model);
         }

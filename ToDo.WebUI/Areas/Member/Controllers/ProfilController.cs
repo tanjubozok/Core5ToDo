@@ -9,26 +9,26 @@ using System.IO;
 using System.Threading.Tasks;
 using ToDo.DTO.DTOs.AppUserDtos;
 using ToDo.Entities.Concrete;
+using ToDo.WebUI.BaseControllers;
+using ToDo.WebUI.StringInfo;
 
 namespace ToDo.WebUI.Areas.Member.Controllers
 {
-    [Authorize(Roles = "Member")]
-    [Area("Member")]
-    public class ProfilController : Controller
+    [Authorize(Roles = RoleInfo.Member)]
+    [Area(AreaInfo.Member)]
+    public class ProfilController : BaseIdentityController
     {
-        private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
-        public ProfilController(UserManager<AppUser> userManager, IMapper mapper)
+        public ProfilController(UserManager<AppUser> userManager, IMapper mapper) : base(userManager)
         {
-            _userManager = userManager;
             _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            TempData["Active"] = "profil";
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            TempData["Active"] = TempdataInfo.Profil;
+            var user = await GirisYapanKullanici();
             return View(_mapper.Map<AppUserListDto>(user));
         }
 
@@ -57,10 +57,7 @@ namespace ToDo.WebUI.Areas.Member.Controllers
                     TempData["message"] = "Güncelleme işleminiz başarılı bir şekilde tamamlandı";
                     return RedirectToAction("Index");
                 }
-                foreach (var item in result.Errors)
-                {
-                    ModelState.AddModelError("", item.Description);
-                }
+                HataEkle(result.Errors);
             }
             return View(model);
         }

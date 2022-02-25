@@ -8,12 +8,14 @@ using System.Linq;
 using ToDo.Business.Interfaces;
 using ToDo.DTO.DTOs.AppUserDtos;
 using ToDo.DTO.DTOs.GorevDtos;
+using ToDo.DTO.DTOs.RaporDtos;
 using ToDo.Entities.Concrete;
+using ToDo.WebUI.StringInfo;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
     public class IsEmriController : Controller
     {
         private readonly IAppUserService _userService;
@@ -35,17 +37,18 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
 
         public IActionResult ListeIsEmri()
         {
-            TempData["Active"] = "isemri";
+            TempData["Active"] = TempdataInfo.IsEmri;
             return View(_mapper.Map<List<GorevListAllDto>>(_gorevService.GetirTumTablolarla()));
         }
 
         public IActionResult EklePersonelGorev(int id, string s, int sayfa = 1)
-{
-            TempData["Active"] = "isemri";
-
+        {
+            TempData["Active"] = TempdataInfo.IsEmri;
             ViewBag.AktifSayfa = sayfa;
             ViewBag.Aranan = s;
-
+            var personeller = _mapper.Map<List<AppUserListDto>>(_userService.GetirAdminOlmayanlar(out int toplamSayfa, s, sayfa));
+            ViewBag.ToplamSayfa = toplamSayfa;
+            ViewBag.Personeller = personeller;
             return View(_mapper.Map<GorevListDto>(_gorevService.GetirAciliyetIleId(id)));
         }
 
@@ -66,8 +69,7 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
 
         public IActionResult GorevlendirPersonel(PersonelGorevlendirDto model)
         {
-            TempData["Active"] = "isemri";
-
+            TempData["Active"] = TempdataInfo.IsEmri;
             PersonelGorevlendirListDto personelGorevlendirModel = new()
             {
                 AppUser = _mapper.Map<AppUserListDto>(_userManager.Users.FirstOrDefault(I => I.Id == model.PersonelId)),
@@ -78,26 +80,19 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
 
         public IActionResult GorevPersonelDetay(int id)
         {
-            TempData["Active"] = "isemri";
+            TempData["Active"] = TempdataInfo.IsEmri;
             return View(_mapper.Map<GorevListAllDto>(_gorevService.GetirRaporlarIleId(id)));
         }
 
         public IActionResult GetirExcel(int id)
         {
-            var list = _gorevService.GetirRaporlarIleId(id).Raporlar;
-            const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            string fileDownloadName = Guid.NewGuid() + ".xlsx";
-
-            return File(_dosyaService.AktarExcel(list), contentType, fileDownloadName);
+            return File(_dosyaService.AktarExcel(_mapper.Map<List<RaporDosyaDto>>(_gorevService.GetirRaporlarIleId(id).Raporlar)), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Guid.NewGuid() + ".xlsx");
         }
 
         public IActionResult GetirPdf(int id)
         {
-            var list = _gorevService.GetirRaporlarIleId(id).Raporlar;
-            const string contentType = "application/pdf";
-            string fileDownloadName = Guid.NewGuid() + ".pdf";
-
-            return File(_dosyaService.AktarPdf(list), contentType, fileDownloadName);
+            var path = _dosyaService.AktarPdf(_mapper.Map<List<RaporDosyaDto>>(_gorevService.GetirRaporlarIleId(id).Raporlar));
+            return File(path, "application/pdf", Guid.NewGuid() + ".pdf");
         }
     }
 }

@@ -7,29 +7,28 @@ using System.Threading.Tasks;
 using ToDo.Business.Interfaces;
 using ToDo.DTO.DTOs.BildirimDtos;
 using ToDo.Entities.Concrete;
+using ToDo.WebUI.BaseControllers;
+using ToDo.WebUI.StringInfo;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
-    public class BildirimController : Controller
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
+    public class BildirimController : BaseIdentityController
     {
         private readonly IBildirimService _bildirimService;
-        private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
-        public BildirimController(IBildirimService bildirimService, UserManager<AppUser> userManager, IMapper mapper)
+        public BildirimController(IBildirimService bildirimService, UserManager<AppUser> userManager, IMapper mapper) : base(userManager)
         {
             _bildirimService = bildirimService;
-            _userManager = userManager;
             _mapper = mapper;
         }
 
         public async Task<IActionResult> List()
         {
-            TempData["Active"] = "bildirim";
-
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            TempData["Active"] = TempdataInfo.Bildirim;
+            var user = await GirisYapanKullanici();
             var bildirim = _bildirimService.GetirOkunmayanlar(user.Id);
             return View(_mapper.Map<List<BildirimListDto>>(bildirim));
         }
@@ -45,7 +44,7 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> HepsiniTamamla()
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await GirisYapanKullanici();
             _bildirimService.GetirOkunmayanlar(user.Id);
             return RedirectToAction("List");
         }

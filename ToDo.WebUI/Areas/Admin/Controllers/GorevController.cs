@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using ToDo.Business.Interfaces;
 using ToDo.DTO.DTOs.GorevDtos;
 using ToDo.Entities.Concrete;
+using ToDo.WebUI.StringInfo;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
     public class GorevController : Controller
     {
         private readonly IGorevService _gorevService;
@@ -26,14 +27,13 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
 
         public IActionResult ListeGorev()
         {
-            TempData["Active"] = "gorev";
+            TempData["Active"] = TempdataInfo.Gorev;
             return View(_mapper.Map<List<GorevListDto>>(_gorevService.GetirAciliyetIleTamamlanmayanlari()));
         }
 
         public IActionResult EkleGorev()
         {
-            TempData["Active"] = "gorev";
-
+            TempData["Active"] = TempdataInfo.Gorev;
             ViewBag.Aciliyetler = new SelectList(_aciliyetService.GetirHepsi(), "Id", "Tanim");
             return View();
         }
@@ -57,8 +57,8 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
 
         public IActionResult GuncelleGorev(int id)
         {
-            TempData["Active"] = "gorev";
-            var gorev = _gorevService.GetirId(id);           
+            TempData["Active"] = TempdataInfo.Gorev;
+            var gorev = _gorevService.GetirId(id);
             ViewBag.Aciliyetler = new SelectList(_aciliyetService.GetirHepsi(), "Id", "Tanim", gorev.AciliyetId);
             return View(_mapper.Map<GorevUpdateDto>(gorev));
         }

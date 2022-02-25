@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ToDo.Business.Interfaces;
+using ToDo.WebUI.StringInfo;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
     public class ChartController : Controller
     {
         private readonly IAppUserService _userService;
@@ -15,9 +16,10 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         {
             _userService = userService;
         }
+
         public IActionResult Index()
         {
-            TempData["Active"] = "chart";
+            TempData["Active"] = TempdataInfo.Grafik;
             return View();
         }
 
