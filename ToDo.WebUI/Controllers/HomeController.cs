@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using ToDo.DTO.DTOs.AppUserDtos;
 using ToDo.Entities.Concrete;
 
 namespace ToDo.WebUI.Controllers
@@ -34,7 +35,7 @@ namespace ToDo.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GirisYap(AppUserSignInViewModel model)
+        public async Task<IActionResult> GirisYap(AppUserSignInDto model)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +67,7 @@ namespace ToDo.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> KayitOl(AppUserAdViewModel model)
+        public async Task<IActionResult> KayitOl(AppUserAddDto model)
         {
             if (ModelState.IsValid)
             {

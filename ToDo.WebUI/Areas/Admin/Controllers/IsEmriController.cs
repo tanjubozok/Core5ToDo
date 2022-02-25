@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using ToDo.Business.Interfaces;
+using ToDo.DTO.DTOs.AppUserDtos;
+using ToDo.DTO.DTOs.GorevDtos;
 using ToDo.Entities.Concrete;
 
 namespace ToDo.WebUI.Areas.Admin.Controllers
@@ -18,81 +21,36 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IDosyaService _dosyaService;
         private readonly IBildirimService _bildirimService;
-        private readonly IMapper
-        public IsEmriController(IAppUserService userService, IGorevService gorevService, UserManager<AppUser> userManager, IDosyaService dosyaService, IBildirimService bildirimService)
+        private readonly IMapper _mapper;
+
+        public IsEmriController(IAppUserService userService, IGorevService gorevService, UserManager<AppUser> userManager, IDosyaService dosyaService, IBildirimService bildirimService, IMapper mapper)
         {
             _userService = userService;
             _gorevService = gorevService;
             _userManager = userManager;
             _dosyaService = dosyaService;
             _bildirimService = bildirimService;
+            _mapper = mapper;
         }
 
         public IActionResult ListeIsEmri()
         {
             TempData["Active"] = "isemri";
-
-            var gorevler = _gorevService.GetirTumTablolarla();
-            List<GorevListAllViewModel> modelList = new();
-
-            foreach (var item in gorevler)
-            {
-                GorevListAllViewModel model = new()
-                {
-                    Id = item.Id,
-                    Aciklama = item.Aciklama,
-                    Aciliyet = item.Aciliyet,
-                    Ad = item.Ad,
-                    AppUser = item.AppUser,
-                    OluşturmaTarihi = item.OlusturmaTarihi,
-                    Raporlar = item.Raporlar
-                };
-                modelList.Add(model);
-            }
-            return View(modelList);
+            return View(_mapper.Map<List<GorevListAllDto>>(_gorevService.GetirTumTablolarla()));
         }
 
         public IActionResult EklePersonelGorev(int id, string s, int sayfa = 1)
-        {
+{
             TempData["Active"] = "isemri";
-
-            var gorev = _gorevService.GetirAciliyetIleId(id);
 
             ViewBag.AktifSayfa = sayfa;
             ViewBag.Aranan = s;
 
-            int toplamSayfa;
-            var personeller = _userService.GetirAdminOlmayanlar(out toplamSayfa, s, sayfa);
-            ViewBag.ToplamSayfa = toplamSayfa;
-
-            List<AppUserListViewModel> userListModel = new();
-            foreach (var item in personeller)
-            {
-                AppUserListViewModel userModel = new()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    SurName = item.SurName,
-                    Email = item.Email,
-                    Picture = item.Picture
-                };
-                userListModel.Add(userModel);
-            }
-            ViewBag.Personeller = userListModel;
-
-            GorevListViewModel gorevModel = new()
-            {
-                Id = gorev.Id,
-                Ad = gorev.Ad,
-                Aciklama = gorev.Aciklama,
-                Aciliyet = gorev.Aciliyet,
-                OlusturmaTarihi = gorev.OlusturmaTarihi
-            };
-            return View(gorevModel);
+            return View(_mapper.Map<GorevListDto>(_gorevService.GetirAciliyetIleId(id)));
         }
 
         [HttpPost]
-        public IActionResult EklePersonelGorev(PersonelGorevlendirViewModel model)
+        public IActionResult EklePersonelGorev(PersonelGorevlendirDto model)
         {
             var gorev = _gorevService.GetirId(model.GorevId);
             gorev.AppUserId = model.PersonelId;
@@ -106,54 +64,22 @@ namespace ToDo.WebUI.Areas.Admin.Controllers
             return RedirectToAction("ListeIsEmri");
         }
 
-        public IActionResult GorevlendirPersonel(PersonelGorevlendirViewModel model)
+        public IActionResult GorevlendirPersonel(PersonelGorevlendirDto model)
         {
             TempData["Active"] = "isemri";
 
-            var user = _userManager.Users.FirstOrDefault(x => x.Id == model.PersonelId);
-            var gorev = _gorevService.GetirAciliyetIleId(model.GorevId);
-
-            AppUserListViewModel userModel = new()
+            PersonelGorevlendirListDto personelGorevlendirModel = new()
             {
-                Id = user.Id,
-                Email = user.Email,
-                Name = user.Name,
-                SurName = user.SurName,
-                Picture = user.Picture
+                AppUser = _mapper.Map<AppUserListDto>(_userManager.Users.FirstOrDefault(I => I.Id == model.PersonelId)),
+                Gorev = _mapper.Map<GorevListDto>(_gorevService.GetirAciliyetIleId(model.GorevId))
             };
-
-            GorevListViewModel gorevModel = new()
-            {
-                Id = gorev.Id,
-                Ad = gorev.Ad,
-                Aciklama = gorev.Aciklama,
-                Aciliyet = gorev.Aciliyet,
-                OlusturmaTarihi = gorev.OlusturmaTarihi
-            };
-
-            PersonelGorevlendirListViewModel viewModel = new()
-            {
-                AppUser = userModel,
-                Gorev = gorevModel
-            };
-
-            return View(viewModel);
+            return View(personelGorevlendirModel);
         }
 
         public IActionResult GorevPersonelDetay(int id)
         {
             TempData["Active"] = "isemri";
-
-            var gorev = _gorevService.GetirRaporlarIleId(id);
-            GorevListAllViewModel model = new()
-            {
-                Id = gorev.Id,
-                Ad = gorev.Ad,
-                Raporlar = gorev.Raporlar,
-                Aciklama = gorev.Aciklama,
-                AppUser = gorev.AppUser
-            };
-            return View(model);
+            return View(_mapper.Map<GorevListAllDto>(_gorevService.GetirRaporlarIleId(id)));
         }
 
         public IActionResult GetirExcel(int id)

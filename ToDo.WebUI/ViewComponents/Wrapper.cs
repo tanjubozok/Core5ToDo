@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ToDo.Business.Interfaces;
+using ToDo.DTO.DTOs.AppUserDtos;
 using ToDo.Entities.Concrete;
 
 namespace ToDo.WebUI.ViewComponents
@@ -9,23 +11,19 @@ namespace ToDo.WebUI.ViewComponents
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IBildirimService _bildirimService;
-        public Wrapper(UserManager<AppUser> userManager, IBildirimService bildirimService)
+        private readonly IMapper _mapper;
+
+        public Wrapper(UserManager<AppUser> userManager, IBildirimService bildirimService, IMapper mapper)
         {
             _userManager = userManager;
             _bildirimService = bildirimService;
+            _mapper = mapper;
         }
 
         public IViewComponentResult Invoke()
         {
             var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-            AppUserListViewModel model = new()
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Picture = user.Picture,
-                SurName = user.SurName,
-                Email = user.Email
-            };
+            var model = _mapper.Map<AppUserListDto>(user);
 
             var bildirimler = _bildirimService.GetirOkunmayanlar(user.Id).Count;
             ViewBag.BildirimSayisi = bildirimler;

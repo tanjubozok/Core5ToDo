@@ -33,7 +33,7 @@ namespace ToDo.WebUI.Areas.Member.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(AppUserListViewModel model, IFormFile Resim)
+        public async Task<IActionResult> Index(AppUserListDto model, IFormFile Resim)
         {
             if (ModelState.IsValid)
             {
