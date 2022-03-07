@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using ToDo.Business.Interfaces;
 using ToDo.DTO.DTOs.AppUserDtos;
 using ToDo.Entities.Concrete;
 
@@ -10,11 +12,13 @@ namespace ToDo.WebUI.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly ICustomLogger _logger;
 
-        public HomeController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public HomeController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ICustomLogger logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -108,6 +112,29 @@ namespace ToDo.WebUI.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index");
+        }
+
+        public IActionResult StatusCode(int? code)
+        {
+            if (code == 404)
+            {
+                ViewBag.Code = code;
+                ViewBag.Message = "Sayfa bulunamadı";
+            }
+            return View();
+        }
+
+        public IActionResult Error()
+        {
+            var exceptionHandler = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            _logger.LogError($"Hatanın oluştuğu yer :{exceptionHandler.Path}\n" +
+                $"Hatanın mesajı :{exceptionHandler.Error.Message}\n" +
+                $"Stack Trace :{exceptionHandler.Error.StackTrace}");
+
+            ViewBag.Path = exceptionHandler.Path;
+            ViewBag.Message = exceptionHandler.Error.Message;
+
+            return View();
         }
     }
 }

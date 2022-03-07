@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ToDo.Business.Concrete;
+using ToDo.Business.CustomLogger;
 using ToDo.Business.Interfaces;
 using ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories;
 using ToDo.DataAccess.Interfaces;
@@ -26,6 +27,9 @@ namespace ToDo.Business.DiContainer
             services.AddScoped<IBildirimDal, EfBildirimRepository>();
 
             services.AddScoped<IDosyaService, DosyaManager>();
+
+            services.AddTransient<ICustomLogger, NLogLogger>();
+
         }
     }
 }

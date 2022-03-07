@@ -45,6 +45,8 @@ namespace ToDo.WebUI
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseStatusCodePagesWithReExecute("/Home/StatusCode", "?code={0}");
+
             app.UseRouting();
             IdentityInitializer.SeedData(userManager, roleManager).Wait();
 
