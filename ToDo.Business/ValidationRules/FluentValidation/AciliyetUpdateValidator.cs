@@ -7,7 +7,7 @@ namespace ToDo.Business.ValidationRules.FluentValidation
     {
         public AciliyetUpdateValidator()
         {
-            RuleFor(I => I.Tanim).NotNull();
+            RuleFor(I => I.Tanim).NotNull().WithMessage("Tanım alanı boş geçilemez");
         }
     }
 }

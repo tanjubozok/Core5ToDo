@@ -9,6 +9,7 @@ namespace ToDo.WebUI.BaseControllers
     public class BaseIdentityController : Controller
     {
         protected readonly UserManager<AppUser> _userManager;
+
         public BaseIdentityController(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
