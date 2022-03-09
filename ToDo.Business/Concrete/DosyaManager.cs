@@ -25,7 +25,7 @@ namespace ToDo.Business.Concrete
 
         public string AktarPdf<T>(List<T> list) where T : class, new()
         {
-            DataTable dataTable = new DataTable();
+            DataTable dataTable = new();
             dataTable.Load(ObjectReader.Create(list));
 
             string fileName = Guid.NewGuid() + ".pdf";
@@ -33,6 +33,11 @@ namespace ToDo.Business.Concrete
             string pathCombine = Path.Combine(Directory.GetCurrentDirectory(), filePath);
 
             var stream = new FileStream(pathCombine, FileMode.Create);
+
+            string arialTtf = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+            BaseFont baseFont = BaseFont.CreateFont(arialTtf, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            Font font = new(baseFont, 12, Font.NORMAL);
+
 
             Document document = new(PageSize.A4, 15f, 15f, 25f, 25f);
             PdfWriter.GetInstance(document, stream);
@@ -43,16 +48,17 @@ namespace ToDo.Business.Concrete
 
             for (int i = 0; i < dataTable.Columns.Count; i++)
             {
-                pdfPTable.AddCell(dataTable.Columns[i].ColumnName);
+                pdfPTable.AddCell(new Phrase(dataTable.Columns[i].ColumnName, font));
             }
 
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
                 for (int j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    pdfPTable.AddCell(dataTable.Rows[i][j].ToString());
+                    pdfPTable.AddCell(new Phrase(dataTable.Rows[i][j].ToString(), font));
                 }
             }
+
             document.Add(pdfPTable);
 
             document.Close();
